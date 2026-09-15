@@ -1,0 +1,121 @@
+{
+  "case_id": "CASE-006",
+  "title": "没有响过的消防铃",
+  "truth": {
+    "culprit": "程泊",
+    "method": "程泊提前用本人操作员代码隔离三层 Z3 并切断三层摄像机，厨房报警出现后顺势利用人工疏散造成的混乱；随后从消防楼梯进入档案室杀害准备冻结可疑维保付款的沈策，之后恢复报警分区和摄像系统并谎称一直在地下设备间",
+    "key_evidence": [
+      "S1",
+      "P2",
+      "A1",
+      "A2"
+    ],
+    "method_required_terms": [
+      "Z3",
+      "隔离",
+      "摄像机",
+      "厨房报警",
+      "消防楼梯"
+    ],
+    "supporting_evidence": [
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "P3",
+      "P4",
+      "P5",
+      "A3",
+      "A4"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M6-1",
+      "content": "“远景机电服务”的历史工商扫描件由一家旧档数字化外包方上传，扫描页脚标有灰色鸦羽和“L.W.C.”",
+      "source_refs": [
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M6-2",
+      "content": "“L.W.C.”再次出现在与当前凶手无直接身份关系的旧档整理痕迹中，提示其更可能是外部记录链条中的长期角色",
+      "source_refs": [
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q6-1",
+      "q": "第六案中三层消防分区编号是什么？",
+      "a": "Z3",
+      "aliases": [
+        "z3",
+        "Z-3",
+        "z-3"
+      ]
+    },
+    {
+      "id": "Q6-2",
+      "q": "第六案中消防主机记录 Z3 被人工隔离的时间是几点？",
+      "a": "00:58",
+      "aliases": [
+        "00点58分",
+        "0点58分",
+        "00:58:42"
+      ]
+    },
+    {
+      "id": "Q6-3",
+      "q": "第六案中程泊的消防主机操作员代码是什么？",
+      "a": "ENG-01",
+      "aliases": [
+        "ENG01",
+        "eng-01",
+        "eng01"
+      ]
+    },
+    {
+      "id": "Q6-4",
+      "q": "第六案中程泊工程鞋哪只脚有六边形防滑补片？",
+      "a": "右脚",
+      "aliases": [
+        "右脚鞋底",
+        "右鞋"
+      ]
+    },
+    {
+      "id": "Q6-5",
+      "q": "第六案沈策准备冻结的是什么类型付款？",
+      "a": "消防维保付款",
+      "aliases": [
+        "消防维保",
+        "维保付款"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "entity_linking"
+    ],
+    "reasoning": [
+      "causal_chain",
+      "system_log_validation",
+      "opportunity_analysis",
+      "red_herring_rejection"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

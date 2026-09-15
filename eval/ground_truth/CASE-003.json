@@ -1,0 +1,115 @@
+{
+  "case_id": "CASE-003",
+  "title": "打烊后的第三只茶杯",
+  "truth": {
+    "culprit": "陈仲",
+    "method": "22:39 后驾车返回茶馆附近，使用本人侧门钥匙回到二层账房与梁复对质并杀害梁复，随后用经理账号打印采购汇总试图确认梁复掌握的材料，再从后门离开",
+    "key_evidence": [
+      "S2",
+      "P1",
+      "A1",
+      "A4"
+    ],
+    "method_required_terms": [
+      "侧门钥匙",
+      "经理账号",
+      "返回",
+      "采购"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S3",
+      "S5",
+      "P2",
+      "P4",
+      "P5",
+      "A2",
+      "A3"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M3-1",
+      "content": "梁复旧账中夹有一张“栖鸦……整理服务”发票页角，编号尾数 0417",
+      "source_refs": [
+        "S4"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M3-2",
+      "content": "页角上的“栖鸦”字样与前两案出现的鸦羽图案和水印可能属于同一套标识体系，但本案无法据此确定具体个人",
+      "source_refs": [
+        "S4"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q3-1",
+      "q": "第三案中第三只茶杯里残留的是什么茶？",
+      "a": "红茶",
+      "aliases": [
+        "红茶和红糖",
+        "红茶残液"
+      ]
+    },
+    {
+      "id": "Q3-2",
+      "q": "第三案中后巷侧门长期持有钥匙的是哪两个人？",
+      "a": "梁复和陈仲",
+      "aliases": [
+        "陈仲和梁复",
+        "梁复、陈仲"
+      ]
+    },
+    {
+      "id": "Q3-3",
+      "q": "第三案中陈仲登记车辆第二次进入停车场的时间是几点？",
+      "a": "22:39",
+      "aliases": [
+        "22点39分",
+        "22时39分"
+      ]
+    },
+    {
+      "id": "Q3-4",
+      "q": "第三案中梁复核对的是哪一种茶叶的采购差额？",
+      "a": "高山红茶",
+      "aliases": [
+        "高山红茶采购",
+        "高山红茶的采购"
+      ]
+    },
+    {
+      "id": "Q3-5",
+      "q": "第三案碎纸篓发票页角的编号尾数是多少？",
+      "a": "0417",
+      "aliases": [
+        "0417号",
+        "尾数0417"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall"
+    ],
+    "reasoning": [
+      "timeline_reconstruction",
+      "contradiction_resolution",
+      "evidence_synthesis",
+      "alternative_explanation_rejection"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

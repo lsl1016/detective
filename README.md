@@ -7,7 +7,7 @@
 - **Evaluator CLI** 做 ground-truth 泄漏自检、结案判分、memory quiz 精确/别名判分、访问日志/回放的多 Agent 规约检查。
 - **bootstrap.sh** 按基座接口注册 caller、主 system prompt、3 个 HTTP 工具、2 个 Skill、3 个子 Agent。
 
-> 目标是先把 M1 闭环跑硬：当前案卷 → 三线并行委派 → 汇总 → 可机械结案判分 → 可审计访问轨迹；再在同一骨架上继续扩 CASE-003+、memory/reflection/graph_memory。
+> 当前版本已经从 M1 双案骨架扩展到 **CASE-001 ~ CASE-010**。CASE-003 起每案约为早期案件的 2 倍长度，并继续保持三线证据闭环、ground truth 物理隔离和跨案 memory quiz。
 
 ---
 
@@ -24,10 +24,11 @@ detective/
 │   └── custom.detective.yaml       # 合并到基座 custom.yaml 的配置片段
 ├── cases/                          # 人工维护：完整 YAML / ground truth 源
 │   ├── CASE-001.yaml
-│   └── CASE-002.yaml
+│   ├── CASE-002.yaml
+│   ├── CASE-003.yaml ... CASE-010.yaml
+│   └── CASE-DESIGN-NOTES.md       # 新增长案的合理性/时间线 review
 ├── casepack/                       # 生成物：Case Server 唯一读取目录
-│   ├── CASE-001.json               # 无 truth/meta_plot/memory_quiz
-│   ├── CASE-002.json
+│   ├── CASE-001.json ... CASE-010.json  # 均无 truth/meta_plot/memory_quiz
 │   └── current.json
 ├── caseserver/
 │   ├── main.go
@@ -84,26 +85,24 @@ Case Server 启动时还会二次检查；如果运行态 JSON 出现这些字�
 
 ---
 
-## 2. 当前两案
+## 2. 当前案件集
 
-### CASE-001：雨夜剧院的空座位
+| Case | 标题 | 主要测试点 |
+|---|---|---|
+| CASE-001 | 雨夜剧院的空座位 | 基础三线委派 / 时间线冲突 |
+| CASE-002 | 停在四层的电梯 | 伪证 vs 机器记录 |
+| CASE-003 | 打烊后的第三只茶杯 | 返回现场 / 权限 + 车辆 + 终端交叉 |
+| CASE-004 | 被提前十分钟的末班车 | 假不在场 / 多时间源可靠性 |
+| CASE-005 | 封存库里的旧胶片 | 物理调包 / 历史数字痕迹 |
+| CASE-006 | 没有响过的消防铃 | 系统隔离 / 真实故障被利用 |
+| CASE-007 | 凌晨两点的药柜 | 工牌与 PIN 身份拆分 / 嫁祸 |
+| CASE-008 | 桥下失踪的蓝伞 | 现场转移 / GPS 与土壤交叉 |
+| CASE-009 | 停电前打印的遗嘱 | 文件 provenance / 储能时间线 |
+| CASE-010 | 不存在的第七码头箱 | 幽灵记录 / 物理-数字双重核验 |
 
-主要测：
+CASE-003 ~ CASE-009 每案约 4k YAML 字符、5 个现场材料、5 名 NPC、4~5 条档案、5 道记忆题；CASE-010 进一步提升到 6 个现场、6 名 NPC、5 条档案和 6 道记忆题。
 
-- 三线委派闭环
-- 时间线冲突
-- 现场/证词/档案交叉验证
-- `鸦羽` meta-plot 第一枚碎片
-- 基础 memory quiz
-
-### CASE-002：停在四层的电梯
-
-主要测：
-
-- 第二次三线并行
-- 伪证 vs 机器记录
-- `R-7` + 鸦羽暗线延续
-- 进入跨案 recall 的准备态
+案件合理性与排除链条见 `cases/CASE-DESIGN-NOTES.md`。暗线逐步把 `鸦羽 → 栖鸦 → 0417 → L.W.C. → 陆闻川` 连接起来，但到 CASE-010 为止仍**不能**仅凭暗线指认陆闻川为幕后凶手。
 
 ---
 
@@ -617,7 +616,9 @@ go test ./...
 
 - 缺必需字段；
 - scene/NPC/archive id 冲突；
-- `truth.key_evidence` 指向不存在材料；
+- `keywords` / `aliases` / evidence refs 等本应为字符串的列表被 YAML 自动解析成数字；
+- `truth.key_evidence` / `supporting_evidence` 指向不存在材料；
+- `truth.key_evidence` 没有同时覆盖 scene / people / archive 三条线；
 - memory quiz 缺 id/q/a；
 - meta-plot 没有 `source_refs`，或暗线引用了不存在的材料 id。
 
@@ -731,7 +732,7 @@ source=reflection revision
 这个目录可以原地继续做到 M2/M3：
 
 ```text
-CASE-003 ~ CASE-006
+CASE-011+ / MASTER 终章
 跨案 quiz sampler
 Retention Curve (+1/+3/+5/+10 案)
 Memory Revision / Correction Rate
@@ -742,4 +743,4 @@ Graph Memory 人物关系题
 judge model 半自动 E2
 ```
 
-建议先用 CASE-001/002 把真实基座跑通，再扩案；否则一旦出现错误，很难区分是剧情、工具、delegate、memory、reflection 还是 evaluator 的问题。
+建议先用 CASE-001/002 做基座接入冒烟，再用 CASE-003~010 做真正的长上下文、长期记忆和跨案暗线测试。后续新增 MASTER 终章前，应先固定陆闻川/栖鸦线的真实历史因果，不要让“重复出现的标识”直接等同于“幕后凶手”。

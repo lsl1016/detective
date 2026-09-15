@@ -27,6 +27,13 @@ def require(case: dict, key: str, path: Path):
         raise ValueError(f"{path.name}: missing key {key}")
 
 
+def validate_string_list(value, label: str, path: Path):
+    if value is None:
+        return
+    if not isinstance(value, list) or any(not isinstance(x, str) for x in value):
+        raise ValueError(f"{path.name}: {label} must be a list of strings")
+
+
 def validate(case: dict, path: Path):
     for key in RUNTIME_KEYS + ("truth", "memory_quiz"):
         require(case, key, path)
@@ -34,26 +41,40 @@ def validate(case: dict, path: Path):
         raise ValueError(f"{path.name}: case_id must start with CASE-")
 
     ids = set()
+    id_line = {}
     for item in case.get("scene", []):
         item_id = item.get("id")
         if not item_id or item_id in ids:
             raise ValueError(f"{path.name}: duplicate/missing scene id {item_id!r}")
         ids.add(item_id)
+        id_line[item_id] = "scene"
     for npc in case.get("npcs", []):
         item_id = npc.get("id")
         if not item_id or item_id in ids:
             raise ValueError(f"{path.name}: duplicate/missing npc id {item_id!r}")
         ids.add(item_id)
+        id_line[item_id] = "people"
     for item in case.get("archive", []):
         item_id = item.get("id")
         if not item_id or item_id in ids:
             raise ValueError(f"{path.name}: duplicate/missing archive id {item_id!r}")
         ids.add(item_id)
+        id_line[item_id] = "archive"
+        validate_string_list(item.get("keywords", []), f"archive[{item_id}].keywords", path)
 
     truth = case["truth"]
+    for field in ("key_evidence", "supporting_evidence", "method_required_terms"):
+        validate_string_list(truth.get(field, []), f"truth.{field}", path)
     for ref in truth.get("key_evidence", []):
         if ref not in ids:
             raise ValueError(f"{path.name}: truth.key_evidence references unknown id {ref}")
+    for ref in truth.get("supporting_evidence", []):
+        if ref not in ids:
+            raise ValueError(f"{path.name}: truth.supporting_evidence references unknown id {ref}")
+    key_lines = {id_line[ref] for ref in truth.get("key_evidence", []) if ref in id_line}
+    missing_lines = {"scene", "people", "archive"} - key_lines
+    if missing_lines:
+        raise ValueError(f"{path.name}: truth.key_evidence must cover all three lines; missing {sorted(missing_lines)}")
 
     qids = set()
     for q in case.get("memory_quiz", []):
@@ -62,16 +83,23 @@ def validate(case: dict, path: Path):
         qids.add(q["id"])
         if "q" not in q or "a" not in q:
             raise ValueError(f"{path.name}: quiz {q['id']} missing q/a")
+        if not isinstance(q["q"], str) or not isinstance(q["a"], str):
+            raise ValueError(f"{path.name}: quiz {q['id']} q/a must be strings")
+        validate_string_list(q.get("aliases", []), f"quiz[{q['id']}].aliases", path)
 
     for hint in case.get("meta_plot", []):
         if not hint.get("hint_id"):
             raise ValueError(f"{path.name}: meta_plot hint missing hint_id")
         refs = hint.get("source_refs", [])
+        validate_string_list(refs, f"meta_plot[{hint['hint_id']}].source_refs", path)
         if not refs:
             raise ValueError(f"{path.name}: meta_plot {hint['hint_id']} must declare source_refs")
         for ref in refs:
             if ref not in ids:
                 raise ValueError(f"{path.name}: meta_plot {hint['hint_id']} references unknown source {ref}")
+
+    for group, values in case.get("evaluation_targets", {}).items():
+        validate_string_list(values, f"evaluation_targets.{group}", path)
 
 
 def main():

@@ -1,0 +1,122 @@
+{
+  "case_id": "CASE-007",
+  "title": "凌晨两点的药柜",
+  "truth": {
+    "culprit": "蒋岑",
+    "method": "蒋岑取得林可遗失的 N-308 工牌，用它刷开地下药房门以制造“实习护士到场”的假象，再用自己的主管 PIN J-CEN-5 打开 E-4；何知微正准备把连续异常领药提交审计，蒋岑在药房与其冲突并将其杀害，随后把林可工牌藏入五层主管柜并谎称一直留在病区",
+    "key_evidence": [
+      "S3",
+      "P1",
+      "P4",
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "method_required_terms": [
+      "N-308",
+      "J-CEN-5",
+      "工牌",
+      "PIN",
+      "地下药房"
+    ],
+    "supporting_evidence": [
+      "S2",
+      "S3",
+      "S4",
+      "P3",
+      "P4",
+      "P5",
+      "A4"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M7-1",
+      "content": "五层旧档复印件上的“旧档复核”章采用灰色鸦羽图案，与前案目录卡水印风格一致",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M7-2",
+      "content": "鸦羽标识出现于十年前的纸档数字化批次，再次支持它属于跨机构的旧档整理体系，而不是当晚犯罪者留下的记号",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q7-1",
+      "q": "第七案中林可的工牌号是什么？",
+      "a": "N-308",
+      "aliases": [
+        "N308",
+        "n-308",
+        "n308"
+      ]
+    },
+    {
+      "id": "Q7-2",
+      "q": "第七案中蒋岑的药柜主管 PIN 标识是什么？",
+      "a": "J-CEN-5",
+      "aliases": [
+        "JCEN5",
+        "J-CEN5",
+        "j-cen-5"
+      ]
+    },
+    {
+      "id": "Q7-3",
+      "q": "第七案中药柜的编号是什么？",
+      "a": "E-4",
+      "aliases": [
+        "E4",
+        "e-4",
+        "e4"
+      ]
+    },
+    {
+      "id": "Q7-4",
+      "q": "第七案中五层主管备用卡套用什么颜色圆点区分？",
+      "a": "蓝色",
+      "aliases": [
+        "蓝点",
+        "蓝色圆点"
+      ]
+    },
+    {
+      "id": "Q7-5",
+      "q": "第七案中何知微在盘点单上准备找谁核清？",
+      "a": "蒋岑",
+      "aliases": [
+        "蒋组长",
+        "护理组长蒋岑"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "identity_binding"
+    ],
+    "reasoning": [
+      "identity_disambiguation",
+      "authentication_chain",
+      "alibi_breaking",
+      "evidence_synthesis"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

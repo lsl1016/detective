@@ -1,0 +1,121 @@
+{
+  "case_id": "CASE-009",
+  "title": "停电前打印的遗嘱",
+  "truth": {
+    "culprit": "顾岳",
+    "method": "顾岳因顾文山拒绝把主要收藏与房产管理权交给自己而将其杀害；小区停电后，顾岳利用 21:25 恢复的家庭储能在本人笔记本上修改 final_will_v6，并在 21:32 发送打印任务，再把 2024 年旧授权书的真实签名页拆下作为新遗嘱第六页，制造“死者生前已签署”的假象",
+    "key_evidence": [
+      "S2",
+      "P3",
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "method_required_terms": [
+      "储能",
+      "21:32",
+      "final_will_v6",
+      "旧授权书",
+      "签名页"
+    ],
+    "supporting_evidence": [
+      "S3",
+      "S4",
+      "S6",
+      "P2",
+      "P4",
+      "P5",
+      "A4",
+      "A5"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M9-1",
+      "content": "2008 年藏品整理目录首次给出完整姓名“陆闻川（L.W.C.）”，并使用与此前案件一致的灰色鸦羽章",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M9-2",
+      "content": "到第九案为止，可以把“鸦羽标识—栖鸦整理—L.W.C.—陆闻川”四类历史线索暂时串成同一条外部档案整理链，但仍没有证据证明陆闻川参与任何单案凶杀",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q9-1",
+      "q": "第九案中家庭储能几点恢复关键回路供电？",
+      "a": "21:24",
+      "aliases": [
+        "21点24分",
+        "21时24分",
+        "21:24:51"
+      ]
+    },
+    {
+      "id": "Q9-2",
+      "q": "第九案中最终遗嘱文件名是什么？",
+      "a": "final_will_v6.docx",
+      "aliases": [
+        "final_will_v6",
+        "final will v6"
+      ]
+    },
+    {
+      "id": "Q9-3",
+      "q": "第九案打印机在几点收到 6 页遗嘱文档？",
+      "a": "21:32",
+      "aliases": [
+        "21点32分",
+        "21时32分",
+        "21:32:14"
+      ]
+    },
+    {
+      "id": "Q9-4",
+      "q": "第九案新遗嘱使用的是哪一年旧授权书的签名页？",
+      "a": "2024年",
+      "aliases": [
+        "2024",
+        "2024 年"
+      ]
+    },
+    {
+      "id": "Q9-5",
+      "q": "第九案中 L.W.C. 对应的完整姓名是什么？",
+      "a": "陆闻川",
+      "aliases": [
+        "陆闻川（L.W.C.）",
+        "陆闻川LWC"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "identity_resolution",
+      "meta_plot_synthesis"
+    ],
+    "reasoning": [
+      "document_provenance",
+      "timeline_reconstruction",
+      "digital_forensics",
+      "intent_vs_fact_separation"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

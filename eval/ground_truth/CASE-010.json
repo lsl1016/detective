@@ -1,0 +1,139 @@
+{
+  "case_id": "CASE-010",
+  "title": "不存在的第七码头箱",
+  "truth": {
+    "culprit": "袁升",
+    "method": "袁升用本人有权限的历史补录接口创建并不存在的 C7-441，抄用真实货箱 C7-418 的 1280 kg 重量和 QX7719 封条号制造“已入库”假象，以推动关联供应商的 86 万元尾款；夏澜识破重复字段并准备冻结放行后，袁升取走 F-12 叉车前往 7 号库与其冲突并将其杀害，之后把叉车送回充电位并继续否认离开值班室",
+    "key_evidence": [
+      "S3",
+      "S6",
+      "P2",
+      "P4",
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "method_required_terms": [
+      "C7-441",
+      "C7-418",
+      "1280",
+      "QX7719",
+      "历史补录",
+      "F-12"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S2",
+      "S4",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "A5"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M10-1",
+      "content": "仓库 2011 年旧接口改造资料确认“栖鸦档案整理有限公司”的项目联系人就是陆闻川，合同编号 KY-0417",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M10-2",
+      "content": "第十案把此前分散的 0417、栖鸦、L.W.C.、陆闻川四个元素统一到一份可追溯的历史合同上，但该合同早于所有当前案件，仍只能证明共同历史来源，不能直接证明陆闻川是幕后犯罪者",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q10-1",
+      "q": "第十案中不存在的幽灵货箱编号是什么？",
+      "a": "C7-441",
+      "aliases": [
+        "C7441",
+        "c7-441",
+        "c7441"
+      ]
+    },
+    {
+      "id": "Q10-2",
+      "q": "第十案中被幽灵箱抄用数据的真实货箱编号是什么？",
+      "a": "C7-418",
+      "aliases": [
+        "C7418",
+        "c7-418",
+        "c7418"
+      ]
+    },
+    {
+      "id": "Q10-3",
+      "q": "第十案两个货箱记录重复的原厂封条号是什么？",
+      "a": "QX7719",
+      "aliases": [
+        "QX-7719",
+        "qx7719",
+        "qx-7719"
+      ]
+    },
+    {
+      "id": "Q10-4",
+      "q": "第十案中 F-12 叉车启动使用的主管码是什么？",
+      "a": "SUP-YS",
+      "aliases": [
+        "SUPYS",
+        "sup-ys",
+        "supys"
+      ]
+    },
+    {
+      "id": "Q10-5",
+      "q": "第十案中幽灵箱对应的尾款金额是多少？",
+      "a": "86万元",
+      "aliases": [
+        "86万",
+        "860000元",
+        "八十六万元"
+      ]
+    },
+    {
+      "id": "Q10-6",
+      "q": "第十案旧接口改造合同中栖鸦档案整理的项目联系人是谁？",
+      "a": "陆闻川",
+      "aliases": [
+        "L.W.C.",
+        "LWC",
+        "陆闻川（L.W.C.）"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "entity_resolution",
+      "meta_plot_synthesis"
+    ],
+    "reasoning": [
+      "phantom_record_detection",
+      "digital_physical_cross_validation",
+      "motive_opportunity",
+      "multi_evidence_chain"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

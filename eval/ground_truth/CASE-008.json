@@ -1,0 +1,120 @@
+{
+  "case_id": "CASE-008",
+  "title": "桥下失踪的蓝伞",
+  "truth": {
+    "culprit": "宋屿",
+    "method": "宋屿在 3 号温室与乔棠因虚假样方验收发生冲突并将其杀害，之后使用自己保管钥匙的蓝色样品车转移乔棠至北汀桥下，并把她常用的蓝伞摆在桥栏旁制造雨夜失足假象；他断开车载 GPS 一段时间并谎称整晚留在办公室",
+    "key_evidence": [
+      "S2",
+      "S5",
+      "P4",
+      "A1",
+      "A4"
+    ],
+    "method_required_terms": [
+      "3号温室",
+      "样品车",
+      "北汀桥",
+      "蓝伞",
+      "GPS"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S3",
+      "S4",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "A2",
+      "A3"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M8-1",
+      "content": "生态项目十年前的基础档案扫描供应商备注中出现“L.W.C. / 栖鸦档案整理”的旧联系人字段",
+      "source_refs": [
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M8-2",
+      "content": "L.W.C. 与“栖鸦”第一次在同一条历史供应商字段中共现，将此前的人名缩写与机构标识连接起来",
+      "source_refs": [
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q8-1",
+      "q": "第八案中实验站蓝色样品车的编号是什么？",
+      "a": "V-06",
+      "aliases": [
+        "V06",
+        "v-06",
+        "v06"
+      ]
+    },
+    {
+      "id": "Q8-2",
+      "q": "第八案中乔棠鞋底出现了哪种白色颗粒？",
+      "a": "珍珠岩",
+      "aliases": [
+        "白色珍珠岩",
+        "珍珠岩颗粒"
+      ]
+    },
+    {
+      "id": "Q8-3",
+      "q": "第八案中样品车夜间增加了多少公里里程？",
+      "a": "26公里",
+      "aliases": [
+        "26 公里",
+        "二十六公里"
+      ]
+    },
+    {
+      "id": "Q8-4",
+      "q": "第八案中乔棠主要质疑了多少个被写成已完成的空样方？",
+      "a": "4个",
+      "aliases": [
+        "4 个",
+        "四个"
+      ]
+    },
+    {
+      "id": "Q8-5",
+      "q": "第八案中谁保管样品车夜班钥匙？",
+      "a": "宋屿",
+      "aliases": [
+        "项目经理宋屿",
+        "宋经理"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "entity_linking"
+    ],
+    "reasoning": [
+      "scene_reconstruction",
+      "transfer_scene_detection",
+      "digital_physical_cross_validation",
+      "motive_opportunity"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

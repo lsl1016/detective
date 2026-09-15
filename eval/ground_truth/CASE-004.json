@@ -1,0 +1,120 @@
+{
+  "case_id": "CASE-004",
+  "title": "被提前十分钟的末班车",
+  "truth": {
+    "culprit": "杜衡",
+    "method": "杜衡先在末班车上刷卡制造“已离站”印象，再趁车辆因故障延迟发车时下车返回调度室；他将墙钟拨快十分钟配合纸质发车表制造时间错觉，在苏棠指出刷卡记录不能证明离站后将其杀害，并试图删除稽核导出历史",
+    "key_evidence": [
+      "P1",
+      "S3",
+      "A1",
+      "A4"
+    ],
+    "method_required_terms": [
+      "刷卡",
+      "下车",
+      "墙钟",
+      "延迟发车",
+      "调度室"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S2",
+      "S5",
+      "P3",
+      "P4",
+      "P5",
+      "A2",
+      "A3"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M4-1",
+      "content": "苏棠导出的异常补贴记录中，有两次报销附件来自“栖鸦数据整理”，其旧档编号同样以 0417 结尾",
+      "source_refs": [
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M4-2",
+      "content": "“栖鸦”相关凭证已经从茶馆旧账扩展到公交历史报销附件，说明它更像长期存在的外部服务主体，而不是某一案件嫌疑人的个人标记",
+      "source_refs": [
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q4-1",
+      "q": "第四案中 47 路末班车实际几点出站？",
+      "a": "23:41",
+      "aliases": [
+        "23点41分",
+        "23时41分",
+        "23:41:08"
+      ]
+    },
+    {
+      "id": "Q4-2",
+      "q": "第四案中杜衡的工号是什么？",
+      "a": "D-204",
+      "aliases": [
+        "D204",
+        "d-204",
+        "d204"
+      ]
+    },
+    {
+      "id": "Q4-3",
+      "q": "第四案调度室墙钟比网络时间快多少分钟？",
+      "a": "10分钟",
+      "aliases": [
+        "十分钟",
+        "10 分钟"
+      ]
+    },
+    {
+      "id": "Q4-4",
+      "q": "第四案中苏棠提醒对方“刷卡不等于”什么？",
+      "a": "车开了",
+      "aliases": [
+        "车辆开了",
+        "已经发车",
+        "车已经开走"
+      ]
+    },
+    {
+      "id": "Q4-5",
+      "q": "第四案中杜衡员工卡在末班车上的刷卡时间是几点？",
+      "a": "23:28",
+      "aliases": [
+        "23点28分",
+        "23时28分",
+        "23:28:44"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall"
+    ],
+    "reasoning": [
+      "timeline_reconstruction",
+      "source_reliability",
+      "contradiction_resolution",
+      "alibi_breaking"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "case_id": "CASE-005",
+  "title": "封存库里的旧胶片",
+  "truth": {
+    "culprit": "孟启",
+    "method": "孟启谎称离馆赴宴，实际在 19:42 后返回资料馆，利用门禁检修和本人修复权限进入封存库，用复制品替换 JX-1A 原始母片；方笙根据 47 秒试扫记录识破其早已接触母片，孟启为掩盖调包和后续非法处置计划将方笙杀害",
+    "key_evidence": [
+      "S3",
+      "P4",
+      "A1",
+      "A4"
+    ],
+    "method_required_terms": [
+      "JX-1A",
+      "47秒",
+      "返回",
+      "调包",
+      "复制品"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S4",
+      "P1",
+      "P3",
+      "P5",
+      "A2",
+      "A3"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M5-1",
+      "content": "2008 年目录卡背面存在灰色鸦羽水印，并标记“整理人 L.W.C.”",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M5-2",
+      "content": "“L.W.C.”首次作为可重复追踪的人员缩写出现，但目录卡形成时间远早于本案，不能把它当成孟启犯罪证据",
+      "source_refs": [
+        "S5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q5-1",
+      "q": "第五案中原始母片的登记编号是什么？",
+      "a": "JX-1A",
+      "aliases": [
+        "JX1A",
+        "jx-1a",
+        "jx1a"
+      ]
+    },
+    {
+      "id": "Q5-2",
+      "q": "第五案中复制品片头的手写编号是什么？",
+      "a": "JX-2C",
+      "aliases": [
+        "JX2C",
+        "jx-2c",
+        "jx2c"
+      ]
+    },
+    {
+      "id": "Q5-3",
+      "q": "第五案去年留下的试扫样片长度是多少？",
+      "a": "47秒",
+      "aliases": [
+        "47 秒",
+        "四十七秒"
+      ]
+    },
+    {
+      "id": "Q5-4",
+      "q": "第五案中孟启实际几点才到聚餐地点？",
+      "a": "20:36",
+      "aliases": [
+        "20点36分",
+        "20时36分"
+      ]
+    },
+    {
+      "id": "Q5-5",
+      "q": "第五案旧目录卡背面的整理人缩写是什么？",
+      "a": "L.W.C.",
+      "aliases": [
+        "LWC",
+        "L.W.C",
+        "lwc"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "entity_linking"
+    ],
+    "reasoning": [
+      "timeline_reconstruction",
+      "physical_digital_cross_validation",
+      "motive_opportunity_capability"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}
