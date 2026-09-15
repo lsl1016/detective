@@ -1,0 +1,6 @@
+{
+  "case_id": "CASE-001",
+  "culprit": "把主侦探最终答案填在这里",
+  "method": "把作案手法填在这里",
+  "evidence_refs": ["S1", "P1", "A1"]
+}

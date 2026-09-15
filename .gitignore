@@ -1,0 +1,12 @@
+# Runtime outputs
+eval/runs/*.jsonl
+eval/runs/*.json
+eval/runs/*.txt
+!eval/runs/.gitkeep
+
+# Local binaries
+bin/
+*.exe
+
+# Local env
+.env

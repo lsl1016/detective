@@ -1,0 +1,82 @@
+case_id: CASE-002
+title: 停在四层的电梯
+briefing: |
+  新城档案馆闭馆后，修复师林澜被发现昏迷在四层密集库入口，随后抢救无效。电梯运行记录显示 21:42 到达四层后
+  长时间停留，但值班人员都声称当时没有使用电梯。现场、电梯维护证词和借阅档案之间存在明显冲突。
+scene:
+  - id: S1
+    title: 四层电梯服务面板
+    content: |
+      服务面板没有破坏痕迹，但三角钥匙孔边缘有新鲜黄铜擦痕。面板内“检修驻停”拨杆被拨到 ON，
+      这会让普通楼层呼叫失效，同时保留轿厢内手动控制。
+  - id: S2
+    title: 密集库门口纤维
+    content: |
+      门槛螺丝上挂着一根深蓝色粗纺羊毛纤维，长度约 3 厘米。档案馆普通制服是灰色涤纶，材质明显不同。
+  - id: S3
+    title: 死者记事本
+    content: |
+      林澜最后一页只写了“R-7 / 不该在这里”。字迹仓促，但没有留下人物姓名。
+npcs:
+  - id: P1
+    name: 邵宁
+    testimony: |
+      我是设备管理员。三角检修钥匙一直锁在一楼工具柜，我整晚没碰过。21:30 后我在地下机房处理空调报警，
+      直到 22:05 才回一楼。
+  - id: P2
+    name: 顾言
+    testimony: |
+      我是夜班保安。21:40 左右我看见邵宁穿着深蓝色呢外套从一楼电梯方向出来，手里还拿着一只短柄工具。
+      他看见我后说只是去确认电梯异响。
+  - id: P3
+    name: 叶青
+    testimony: |
+      我负责档案修复。林澜最近在追查一份编号 R-7 的旧借阅单，她说“有人把借阅时间改过”。
+      她没有告诉我具体是谁。
+archive:
+  - id: A1
+    title: 电梯检修钥匙签领记录
+    keywords: [三角钥匙, 邵宁, 电梯]
+    content: |
+      三角检修钥匙编号 E-T3。当天 20:55 的电子工具柜记录显示：邵宁以“测试层门”名义取出 E-T3，
+      22:11 才归还。记录由工牌自动采集，无法由普通值班账号手工修改。
+  - id: A2
+    title: R-7 借阅单变更审计
+    keywords: [R-7, 借阅, 邵宁]
+    content: |
+      R-7 原始借阅人为邵宁。两周前记录被修改为“系统维护占用”，修改账号同样属于邵宁。
+      林澜在案发当天下午申请查看过该条审计历史。借阅单扫描件背面还有一枚极淡的鸦羽水印，来源字段为空。
+  - id: A3
+    title: 员工外套登记
+    keywords: [邵宁, 深蓝, 羊毛]
+    content: |
+      邵宁冬季个人外套登记为深蓝色粗纺羊毛材质，非单位统一制服。
+truth:
+  culprit: 邵宁
+  method: 使用 E-T3 将电梯切入检修驻停，把林澜诱至四层后袭击，并试图掩盖与 R-7 借阅记录的关联
+  key_evidence: [S1, P2, A1]
+  method_required_terms: [E-T3, 检修驻停, 四层, R-7]
+  supporting_evidence: [S2, A2, A3, P3]
+meta_plot:
+  - hint_id: M2-1
+    content: 林澜记事本中的 R-7 借阅单背面印有极淡的鸦羽水印，与第一案火柴盒图案相似
+    source_refs: [A2]
+    truth_link: MASTER
+memory_quiz:
+  - id: Q2-1
+    q: 第二案中电梯检修钥匙的编号是什么？
+    a: E-T3
+    aliases: ["ET3", "E T3", "e-t3", "et3"]
+  - id: Q2-2
+    q: 第二案中林澜记事本写下的编号是什么？
+    a: R-7
+    aliases: ["R7", "r-7", "r7"]
+  - id: Q2-3
+    q: 第二案门槛螺丝上发现的纤维是什么颜色？
+    a: 深蓝色
+    aliases: ["深蓝", "蓝色", "深蓝色羊毛"]
+evaluation_targets:
+  memory: [exact_fact, cross_case_recall]
+  reasoning: [contradiction_resolution, evidence_synthesis]
+  multi_agent: [parallel_delegate, information_isolation]
+  skills: [timeline_reconstruction, cross_validation]

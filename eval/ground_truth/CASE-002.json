@@ -1,0 +1,86 @@
+{
+  "case_id": "CASE-002",
+  "title": "停在四层的电梯",
+  "truth": {
+    "culprit": "邵宁",
+    "method": "使用 E-T3 将电梯切入检修驻停，把林澜诱至四层后袭击，并试图掩盖与 R-7 借阅记录的关联",
+    "key_evidence": [
+      "S1",
+      "P2",
+      "A1"
+    ],
+    "method_required_terms": [
+      "E-T3",
+      "检修驻停",
+      "四层",
+      "R-7"
+    ],
+    "supporting_evidence": [
+      "S2",
+      "A2",
+      "A3",
+      "P3"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M2-1",
+      "content": "林澜记事本中的 R-7 借阅单背面印有极淡的鸦羽水印，与第一案火柴盒图案相似",
+      "source_refs": [
+        "A2"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q2-1",
+      "q": "第二案中电梯检修钥匙的编号是什么？",
+      "a": "E-T3",
+      "aliases": [
+        "ET3",
+        "E T3",
+        "e-t3",
+        "et3"
+      ]
+    },
+    {
+      "id": "Q2-2",
+      "q": "第二案中林澜记事本写下的编号是什么？",
+      "a": "R-7",
+      "aliases": [
+        "R7",
+        "r-7",
+        "r7"
+      ]
+    },
+    {
+      "id": "Q2-3",
+      "q": "第二案门槛螺丝上发现的纤维是什么颜色？",
+      "a": "深蓝色",
+      "aliases": [
+        "深蓝",
+        "蓝色",
+        "深蓝色羊毛"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall"
+    ],
+    "reasoning": [
+      "contradiction_resolution",
+      "evidence_synthesis"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

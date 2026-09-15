@@ -1,0 +1,81 @@
+{
+  "case_id": "CASE-001",
+  "title": "雨夜剧院的空座位",
+  "truth": {
+    "culprit": "韩峥",
+    "method": "利用停电用 K-17 进入票据室杀害周砚，并手工回拨壁钟伪造更早的死亡时间",
+    "key_evidence": [
+      "S1",
+      "P1",
+      "A1"
+    ],
+    "method_required_terms": [
+      "停电",
+      "K-17",
+      "回拨壁钟"
+    ],
+    "supporting_evidence": [
+      "S2",
+      "A2",
+      "P3"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M1-1",
+      "content": "窗台火柴盒刻有鸦羽图案，来源不明",
+      "source_refs": [
+        "S3"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q1-1",
+      "q": "第一案中票据室壁钟停在几点？",
+      "a": "22:17",
+      "aliases": [
+        "22点17分",
+        "22时17分"
+      ]
+    },
+    {
+      "id": "Q1-2",
+      "q": "第一案中票据室机械备用钥匙的编号是什么？",
+      "a": "K-17",
+      "aliases": [
+        "K17",
+        "k-17",
+        "k17"
+      ]
+    },
+    {
+      "id": "Q1-3",
+      "q": "第一案现场发现的火柴盒上刻着什么图案？",
+      "a": "鸦羽",
+      "aliases": [
+        "鸦羽图案",
+        "乌鸦羽毛",
+        "乌鸦羽毛图案"
+      ]
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact"
+    ],
+    "reasoning": [
+      "contradiction_resolution",
+      "evidence_synthesis"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

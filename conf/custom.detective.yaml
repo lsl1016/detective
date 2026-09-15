@@ -1,0 +1,25 @@
+# Merge this fragment into react-base-service/conf/mount/custom.yaml.
+# Table prerequisites still need to be created by the base service's sql/init.sql.
+llm:
+  react:
+    memory:
+      enabled: true
+      resident_max_items: 16
+      resident_budget_chars: 2000
+      index_max_items: 64
+      detached_max_items: 500
+      allow_user_scope: true
+      reflection:
+        enabled: true
+        cooldown_minutes: 60
+        max_writes_per_run: 20
+        transcript_char_limit: 16000
+    subagent:
+      enabled: true
+      max_parallel: 3
+      max_depth: 2
+      default_max_steps: 8
+    # Keep workspace disabled during benchmark runs so the model cannot inspect
+    # this repository and read ground truth files.
+    workspace:
+      enabled: false
