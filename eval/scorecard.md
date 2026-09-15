@@ -55,3 +55,27 @@ go run ./evaluator -mode all -case CASE-001 \
 
 ## 备注
 
+
+## E1-X 跨案依赖题（CASE-011+）
+
+- cross_case_quiz 命中: `__/__`
+- declared source case 是否已下架:
+- 当前案是否泄漏 accepted answer: `必须为否`
+- 错题归因：`历史记忆缺失 / 实体未连接 / 记住但来源混淆 / 过度因果合并`
+
+## MASTER（CASE-015）
+
+- mastermind:
+- network:
+- required_dependency_ids 覆盖: `__/8`
+- 是否正确使用 CASE-003/005/008/009 历史锚点:
+- 是否正确使用 CASE-011~014 现代桥接证据:
+- Scope Guard：是否错误声称陆闻川指挥此前全部单案凶杀: `0 次为合格`
+
+```bash
+go run ./evaluator -mode crossquiz -case CASE-015 \
+  -answers eval/templates/CASE-015.answers.json
+
+go run ./evaluator -mode master -case CASE-015 \
+  -master-verdict eval/templates/master_verdict.json
+```

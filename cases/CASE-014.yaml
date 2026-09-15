@@ -1,0 +1,157 @@
+case_id: CASE-014
+title: 关机后的第九次登录
+briefing: |
+  城市医学研究库计划停用一套运行十二年的旧样本管理系统。下线前夜，合规负责人沈岚发现一个早已不在员工目录中的 recovery-admin 账号仍能导出封存样本索引。
+  她准备冻结该账号并追查最近一次导出时，被发现死在旧机房旁的介质交接室。IT 主管高叙声称 recovery-admin 是“迁移年代留下的只读账号”，自己当晚 23:00 后一直在新机房做关机演练。
+  服务器日志却显示，所谓只读账号完成了第九次夜间登录并导出一批受限索引；高叙本人跳板机、维护钥匙和一封近期支持消息把这次操作串了起来。
+  更关键的是，近期支持消息的署名只有 L.W.C.。单案可以证明高叙是当前案件凶手；但要判断这个仍在 2026 年提供旧迁移账号支持的 L.W.C. 到底是谁，需要召回第九案已经解析出的完整姓名。
+scene:
+  - id: S1
+    title: 旧系统关机清单
+    content: |
+      纸质清单列出计划中的 8 次验证登录，最后一项写“23:10 完成第八次，只读核验后关闭 recovery-admin”。
+      但清单背面被沈岚手写补了一句：“00:07 又出现第九次，不是只读，导出了 IDX-R9。”
+  - id: S2
+    title: 介质交接室的加密移动盘
+    content: |
+      桌下找到一只加密移动盘，标签为 MEDIA-R9。盘内只保留导出清单头部，列出 312 条封存样本索引和对应存储位置编号，没有样本内容本身。
+      导出时间为 00:09，文件创建主机标识 LEGACY-JUMP-02。
+  - id: S3
+    title: 旧机房维护钥匙封套
+    content: |
+      旧机房夜间维护钥匙原本装在一次性编号封套中。现场封套编号 K-771 已被拆开又用透明胶重新粘合，封套领取栏签有“高叙 / 22:42”。
+      归还栏直到 00:31 才补签。
+  - id: S4
+    title: 沈岚的审计打印页
+    content: |
+      打印页圈出了 recovery-admin 的最近九次登录。前八次均来自隔离测试终端，第九次来自 LEGACY-JUMP-02，且权限从 read-only 临时提升到 export-index。
+      沈岚在旁边写：“权限提升不是系统自动动作，查本地 override。”
+  - id: S5
+    title: 近期支持消息截图
+    content: |
+      沈岚保存了一张内部工单截图。三天前，高叙询问“旧迁移客户如何恢复被禁用的 recovery-admin 导出权限”，外部支持回复提供了一段恢复步骤，署名仅为“L.W.C.”。
+      回复中写“沿用旧批次 0417 的本地 override，不走新 IAM”。截图没有出现该署名对应的完整姓名。
+  - id: S6
+    title: 交接室门框与工牌套
+    content: |
+      门框内侧有新鲜擦痕，地面发现高叙常用黑色工牌套的断裂挂绳扣。工牌套为常见型号，但同事确认高叙当晚 22:00 仍在使用一只缺角黑套。
+npcs:
+  - id: P1
+    name: 高叙
+    testimony: |
+      recovery-admin 是旧迁移留下的历史账号，理论上只能读。我没有用它导出东西，也不知道什么第九次登录。
+      23:00 后我一直在新机房盯关机演练，旧机房钥匙是提前领的，但没用上。L.W.C. 只是外部旧系统支持的签名，我不知道那是谁。
+  - id: P2
+    name: 方荻
+    testimony: |
+      我是系统工程师。23:35 我到新机房接替高叙值守，23:42 左右他离开控制区，此后直到 00:20 左右才回来，说去卫生间和取咖啡了，时间比平常久很多。
+      新机房控制台在 23:37 至 00:19 期间没有高叙个人账号操作。
+  - id: P3
+    name: 叶铎
+    testimony: |
+      我负责 IAM。recovery-admin 根本不在新 IAM 目录里，所以正常后台不能给它提权；只有旧机房本地 override 可以临时改权限。
+      高叙是目前唯一还保留旧系统现场管理员资格的人，我们本来就准备在下线后取消他的这项资格。
+  - id: P4
+    name: 韩青
+    testimony: |
+      我是夜班保安。23:58 看见高叙从新机房方向走到旧机房门口，手里拿着钥匙封套。00:18 左右他从介质交接室那边出来。
+      他让我别记临时巡检，说“关机演练里已经有记录”。我还是在纸本巡查表上写了时间。
+  - id: P5
+    name: 沈岚助理周榆
+    testimony: |
+      沈岚发现第九次登录后给我发消息，说“高叙问过外部老支持怎么恢复导出权限，这不是偶然登录”。
+      她还说 L.W.C. 这个缩写“以前在哪份老档里见过”，但没有来得及告诉我完整姓名。
+archive:
+  - id: A1
+    title: recovery-admin 第九次认证日志
+    keywords: ["recovery-admin", "第九次", "00:07", "LEGACY-JUMP-02"]
+    content: |
+      00:07:16，recovery-admin 从 LEGACY-JUMP-02 成功认证；00:08:02 本地 override 将权限从 read-only 提升为 export-index；00:09:31 导出 IDX-R9；00:12:04 权限恢复。
+      前八次验证登录均没有发生权限提升。
+  - id: A2
+    title: LEGACY-JUMP-02 本地管理员审计
+    keywords: ["高叙", "LEGACY-JUMP-02", "override", "00:06"]
+    content: |
+      00:06:49，本地管理员 gao-xu 解锁 LEGACY-JUMP-02；00:06:58 打开 legacy_override 工具；00:13:22 锁屏。
+      工具审计记录使用的是高叙个人硬件令牌，令牌当晚没有挂失。
+  - id: A3
+    title: 新机房关机演练录像索引
+    keywords: ["高叙", "新机房", "23:42", "00:19"]
+    content: |
+      新机房录像索引显示高叙 23:42 离开控制区，00:19:44 才重新进入。期间由方荻独自值守。
+      因此高叙声称“23:00 后一直在新机房”的不在场证明不成立。
+  - id: A4
+    title: IDX-R9 导出用途草稿
+    keywords: ["IDX-R9", "高叙", "导出", "外部"]
+    content: |
+      高叙私人工作目录恢复出一份未发送报价草稿，内容为“提供去标识化样本库存位置与批次分布”，字段结构与 IDX-R9 导出头部一致。
+      草稿本身构成违规获利动机，但不证明沈岚死亡过程。
+  - id: A5
+    title: 旧迁移账号创建摘要
+    keywords: ["recovery-admin", "0417", "L.W.C.", "迁移"]
+    content: |
+      recovery-admin 创建于 2012 年旧系统迁移期，备注只有“external recovery contact: L.W.C. / batch 0417”。
+      当前资料没有保留外部联系人的完整姓名；新 IAM 上线后该账号本应被禁用，但因兼容性一直保留在本地。
+truth:
+  culprit: 高叙
+  method: 高叙为了利用 recovery-admin 导出封存样本索引牟利，按照外部 L.W.C. 提供的旧批次 0417 本地 override 步骤，在 00:07 使用 LEGACY-JUMP-02 将账号临时提升为 export-index 并导出 IDX-R9；沈岚发现第九次登录并准备冻结旧账号后，高叙持维护钥匙前往旧机房，在介质交接室与其冲突并将其杀害，随后回到新机房继续伪装关机演练
+  key_evidence: ["S1", "S4", "P2", "P4", "A1", "A2", "A3"]
+  method_required_terms: ["recovery-admin", "第九次", "LEGACY-JUMP-02", "override", "IDX-R9", "高叙"]
+  supporting_evidence: ["S2", "S3", "S6", "P3", "P5", "A4", "A5"]
+meta_plot:
+  - hint_id: M14-1
+    content: L.W.C. 不再只是十多年前的历史联系人缩写，而是在本案发生前三天仍主动提供旧迁移账号的恢复步骤，证明该身份链至少持续活动到当前时间
+    source_refs: ["S5", "A5"]
+    truth_link: MASTER
+  - hint_id: M14-2
+    content: 当前案卷故意不提供 L.W.C. 的完整姓名；只有准确召回此前已经完成的身份解析，才能把“活跃的 L.W.C.”落到具体人物
+    source_refs: ["S5", "A5"]
+    truth_link: MASTER
+cross_case_dependencies:
+  - id: D14-009
+    source_case: CASE-009
+    source_refs: ["S5"]
+    current_refs: ["S5", "A5"]
+    historical_fact: CASE-009 的 2008 年藏品整理目录明确给出“陆闻川（L.W.C.）”
+    high_value_judgment: 本案仍在提供 recovery-admin 支持的 L.W.C. 可以被解析为陆闻川，使“历史联系人”第一次升级为“当前仍活跃的具体人物”
+    required_for_single_case: false
+    required_for_master: true
+cross_case_quiz:
+  - id: XQ14-1
+    q: 本案近期支持消息只署名 L.W.C.。根据第九案已经完成的身份解析，这个缩写对应的完整姓名是什么？
+    a: 陆闻川
+    aliases: ["陆闻川（L.W.C.）", "陆闻川LWC"]
+    source_case: CASE-009
+    source_refs: ["S5"]
+    current_refs: ["S5", "A5"]
+    historical_only: true
+memory_quiz:
+  - id: Q14-1
+    q: 第十四案旧系统历史账号的名称是什么？
+    a: recovery-admin
+    aliases: ["recovery admin", "recoveryadmin"]
+  - id: Q14-2
+    q: 第十四案第九次登录发生在几点？
+    a: "00:07"
+    aliases: ["00点07分", "0点07分", "00:07:16"]
+  - id: Q14-3
+    q: 第十四案第九次登录使用的跳板机编号是什么？
+    a: LEGACY-JUMP-02
+    aliases: ["LEGACYJUMP02", "legacy-jump-02"]
+  - id: Q14-4
+    q: 第十四案导出的索引批次叫什么？
+    a: IDX-R9
+    aliases: ["IDXR9", "idx-r9", "idxr9"]
+  - id: Q14-5
+    q: 第十四案是谁使用个人管理员账号打开 legacy_override 工具？
+    a: 高叙
+    aliases: ["IT主管高叙", "高主管"]
+  - id: Q14-6
+    q: 第十四案近期外部支持消息的署名缩写是什么？
+    a: L.W.C.
+    aliases: ["LWC", "L.W.C", "lwc"]
+evaluation_targets:
+  memory: ["exact_fact", "cross_case_recall", "identity_resolution", "historical_to_current_bridge"]
+  reasoning: ["legacy_account_abuse", "local_override_attribution", "timeline_reconstruction", "identity_scope_separation"]
+  multi_agent: ["parallel_delegate", "information_isolation"]
+  skills: ["timeline_reconstruction", "cross_validation"]

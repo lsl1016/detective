@@ -7,7 +7,7 @@
 - **Evaluator CLI** 做 ground-truth 泄漏自检、结案判分、memory quiz 精确/别名判分、访问日志/回放的多 Agent 规约检查。
 - **bootstrap.sh** 按基座接口注册 caller、主 system prompt、3 个 HTTP 工具、2 个 Skill、3 个子 Agent。
 
-> 当前版本已经从 M1 双案骨架扩展到 **CASE-001 ~ CASE-010**。CASE-003 起每案约为早期案件的 2 倍长度，并继续保持三线证据闭环、ground truth 物理隔离和跨案 memory quiz。
+> 当前版本已经扩展到 **CASE-001 ~ CASE-015**。CASE-011~014 是第一组“跨案依赖型案件”：单案仍可独立结案，但高价值判断需要召回指定历史案；CASE-015 是第一章真正的 MASTER 案，并加入可机械判分的 `cross_case_dependencies / cross_case_quiz / master_truth`。
 
 ---
 
@@ -25,10 +25,11 @@ detective/
 ├── cases/                          # 人工维护：完整 YAML / ground truth 源
 │   ├── CASE-001.yaml
 │   ├── CASE-002.yaml
-│   ├── CASE-003.yaml ... CASE-010.yaml
-│   └── CASE-DESIGN-NOTES.md       # 新增长案的合理性/时间线 review
+│   ├── CASE-003.yaml ... CASE-015.yaml
+│   ├── CASE-DESIGN-NOTES.md       # 全部案件合理性/时间线 review
+│   └── CHAPTER-1-MASTER-DESIGN.md # 第一章暗线与 MASTER 因果边界
 ├── casepack/                       # 生成物：Case Server 唯一读取目录
-│   ├── CASE-001.json ... CASE-010.json  # 均无 truth/meta_plot/memory_quiz
+│   ├── CASE-001.json ... CASE-015.json  # 均无任何 ground-truth 字段
 │   └── current.json
 ├── caseserver/
 │   ├── main.go
@@ -63,6 +64,7 @@ cases/CASE-xxx.yaml
         ▼                              ▼
 casepack/CASE-xxx.json          eval/ground_truth/CASE-xxx.json
 仅可玩材料                       truth / meta_plot / memory_quiz
+                                  cross_case_* / master_truth
         │                              │
         ▼                              ▼
    Case Server                      Evaluator
@@ -78,6 +80,9 @@ casepack/CASE-xxx.json          eval/ground_truth/CASE-xxx.json
 truth
 meta_plot
 memory_quiz
+cross_case_dependencies
+cross_case_quiz
+master_truth
 evaluation_targets
 ```
 
@@ -99,10 +104,15 @@ Case Server 启动时还会二次检查；如果运行态 JSON 出现这些字�
 | CASE-008 | 桥下失踪的蓝伞 | 现场转移 / GPS 与土壤交叉 |
 | CASE-009 | 停电前打印的遗嘱 | 文件 provenance / 储能时间线 |
 | CASE-010 | 不存在的第七码头箱 | 幽灵记录 / 物理-数字双重核验 |
+| CASE-011 | 凌晨四点的空白借阅单 | 时间回填 / 依赖 CASE-003 解析 0417 来源 |
+| CASE-012 | 没有原稿的第五幅画 | provenance 分层 / 依赖 CASE-005 防止错误归因 |
+| CASE-013 | 停运仓里的第四只温度探头 | 探头身份映射 / 依赖 CASE-008 做跨机构实体确认 |
+| CASE-014 | 关机后的第九次登录 | 旧账号 override / 依赖 CASE-009 完成 L.W.C. 身份解析 |
+| CASE-015 | 最后一次归档 | 第一章 MASTER / 多跳跨案记忆 + 因果边界 |
 
-CASE-003 ~ CASE-009 每案约 4k YAML 字符、5 个现场材料、5 名 NPC、4~5 条档案、5 道记忆题；CASE-010 进一步提升到 6 个现场、6 名 NPC、5 条档案和 6 道记忆题。
+CASE-011~014 每案都保持 scene / people / archive 三线证据闭环，且 `truth.culprit` 不依赖历史材料；历史记忆只影响更高层的来源、身份和因果判断。CASE-015 则有意把“完整命名凶手/MASTER”设计成跨案硬依赖。
 
-案件合理性与排除链条见 `cases/CASE-DESIGN-NOTES.md`。暗线逐步把 `鸦羽 → 栖鸦 → 0417 → L.W.C. → 陆闻川` 连接起来，但到 CASE-010 为止仍**不能**仅凭暗线指认陆闻川为幕后凶手。
+案件合理性与排除链条见 `cases/CASE-DESIGN-NOTES.md`；第一章 MASTER 的完整因果边界见 `cases/CHAPTER-1-MASTER-DESIGN.md`。关键原则：**陆闻川是栖鸦恢复网络的持续组织者，不等于他指挥了此前所有单案凶杀。**
 
 ---
 
@@ -429,6 +439,9 @@ go run ./evaluator -mode selfcheck
 - 运行态没有答案字段泄漏；
 - `truth.key_evidence` 都能解析到真实材料 id；
 - `memory_quiz` 标准答案确实出现在本案运行材料中；
+- `cross_case_quiz` 标准答案确实出现在声明的历史 source case 中；
+- 对 `historical_only: true` 的跨案题，accepted answer 不得出现在当前运行态案卷；
+- `cross_case_dependencies` 的 source/current refs 必须全部存在；
 - `current.json` 指向真实 casepack。
 
 ### 10.2 结案判分
@@ -464,6 +477,20 @@ go run ./evaluator \
   -mode quiz \
   -case CASE-001 \
   -answers eval/runs/CASE-001.answers.json
+```
+
+跨案依赖题（CASE-011+）：
+
+```bash
+go run ./evaluator -mode crossquiz -case CASE-015 \
+  -answers eval/templates/CASE-015.answers.json
+```
+
+MASTER 判分：
+
+```bash
+go run ./evaluator -mode master -case CASE-015 \
+  -master-verdict eval/templates/master_verdict.json
 ```
 
 判分会做：
@@ -601,6 +628,35 @@ memory_quiz:
     q: ...
     a: ...
     aliases: [...]
+
+# CASE-011+ 可选：
+cross_case_dependencies:
+  - id: D11-003
+    source_case: CASE-003
+    source_refs: [S4]
+    current_refs: [S6]
+    historical_fact: ...
+    high_value_judgment: ...
+    required_for_single_case: false
+    required_for_master: true
+cross_case_quiz:
+  - id: XQ11-1
+    q: ...
+    a: ...
+    aliases: [...]
+    source_case: CASE-003
+    source_refs: [S4]
+    current_refs: [S6]
+    historical_only: true
+
+# MASTER 案可选：
+master_truth:
+  mastermind: ...
+  network_name: ...
+  thesis: ...
+  required_dependency_ids: [...]
+  required_terms: [...]
+
 evaluation_targets: ...
 ```
 
@@ -732,7 +788,7 @@ source=reflection revision
 这个目录可以原地继续做到 M2/M3：
 
 ```text
-CASE-011+ / MASTER 终章
+CASE-016+ 第二章暗线
 跨案 quiz sampler
 Retention Curve (+1/+3/+5/+10 案)
 Memory Revision / Correction Rate

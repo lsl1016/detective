@@ -23,3 +23,9 @@ bootstrap:
 
 clean-runs:
 	rm -f eval/runs/*.jsonl eval/runs/*.json eval/runs/*.txt
+
+crossquiz-master:
+	go run ./evaluator -mode crossquiz -case CASE-015 -answers eval/templates/CASE-015.answers.json
+
+master-eval:
+	go run ./evaluator -mode master -case CASE-015 -master-verdict eval/templates/master_verdict.json

@@ -1,0 +1,408 @@
+{
+  "case_id": "CASE-015",
+  "title": "最后一次归档",
+  "truth": {
+    "culprit": "陆闻川",
+    "method": "L.W.C. 按预约进入中转库后，使用只有该访客与秦术掌握的一次性管理员挑战取得设备区本地权限，在 21:32 解锁 MASTER-KEY 存放盒，并在 21:33 以 LWC-ROOT + MASTER-KEY 建立离线恢复网关根会话，试图导出完整恢复入口总清单；秦术拒绝配合并准备公开近年有偿重启旧入口的证据后，L.W.C. 在现场将秦术杀害，带走 MASTER-KEY 并从后门离开。结合历史案件对 L.W.C. 的身份解析，L.W.C. 即陆闻川",
+    "key_evidence": [
+      "S2",
+      "S3",
+      "S4",
+      "P2",
+      "P4",
+      "A1",
+      "A2",
+      "A5",
+      "A6"
+    ],
+    "method_required_terms": [
+      "L.W.C.",
+      "MASTER-KEY",
+      "LWC-ROOT",
+      "恢复网关",
+      "21:33",
+      "陆闻川"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S5",
+      "S6",
+      "S7",
+      "P1",
+      "P3",
+      "P5",
+      "P6",
+      "A3",
+      "A4"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M15-1",
+      "content": "第一章暗线在本案收束：0417、灰色鸦羽、L.W.C.、旧恢复入口与当前有偿恢复活动属于同一条持续存在的“栖鸦恢复网络”",
+      "source_refs": [
+        "S1",
+        "S6",
+        "S7",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M15-2",
+      "content": "MASTER 的正确结论不是“陆闻川指挥了此前所有单案凶杀”，而是“陆闻川长期控制并重新启用旧迁移恢复入口，是栖鸦恢复网络的持续组织者；此前多起独立案件提供了追踪这条网络的历史锚点”",
+      "source_refs": [
+        "S7",
+        "P3",
+        "A3",
+        "A4"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q15-1",
+      "q": "第十五案秦术准备公开的总清单标题是什么？",
+      "a": "Legacy Recovery Inventory",
+      "aliases": [
+        "LegacyRecoveryInventory",
+        "恢复入口总清单"
+      ]
+    },
+    {
+      "id": "Q15-2",
+      "q": "第十五案丢失的硬件密钥叫什么？",
+      "a": "MASTER-KEY",
+      "aliases": [
+        "MASTERKEY",
+        "master-key",
+        "masterkey"
+      ]
+    },
+    {
+      "id": "Q15-3",
+      "q": "第十五案建立离线恢复网关根会话的身份是什么？",
+      "a": "LWC-ROOT",
+      "aliases": [
+        "LWCROOT",
+        "lwc-root",
+        "lwcroot"
+      ]
+    },
+    {
+      "id": "Q15-4",
+      "q": "第十五案根会话几点建立？",
+      "a": "21:33",
+      "aliases": [
+        "21点33分",
+        "21时33分",
+        "21:33:02"
+      ]
+    },
+    {
+      "id": "Q15-5",
+      "q": "第十五案访客卡上的预约名是什么？",
+      "a": "L.W.C.",
+      "aliases": [
+        "LWC",
+        "L.W.C",
+        "lwc"
+      ]
+    },
+    {
+      "id": "Q15-6",
+      "q": "第十五案有多少个项目在总清单中被标记为“2026仍可用”？",
+      "a": "4个",
+      "aliases": [
+        "4 个",
+        "四个"
+      ]
+    },
+    {
+      "id": "Q15-7",
+      "q": "第十五案中秦术明确说哪几案的新访问证明旧入口仍有人使用？",
+      "a": "011到014",
+      "aliases": [
+        "011 到 014",
+        "CASE-011到CASE-014",
+        "011-014",
+        "11到14案"
+      ]
+    }
+  ],
+  "cross_case_dependencies": [
+    {
+      "id": "D15-003",
+      "source_case": "CASE-003",
+      "source_refs": [
+        "S4"
+      ],
+      "current_refs": [
+        "S1",
+        "S6",
+        "A2",
+        "A3"
+      ],
+      "historical_fact": "CASE-003 的旧发票页角同时保留 0417 与“栖鸦……整理服务”字样",
+      "high_value_judgment": "将 REC-0417 / 0417 与此前出现过的“栖鸦”历史服务标识建立来源关联",
+      "required_for_single_case": true,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-005",
+      "source_case": "CASE-005",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S6",
+        "A3"
+      ],
+      "historical_fact": "CASE-005 的 2008 年目录卡同时出现灰色鸦羽和 L.W.C.",
+      "high_value_judgment": "证明鸦羽 + L.W.C. 是长期历史标识，不是当前冲突临时伪造的组合",
+      "required_for_single_case": true,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-008",
+      "source_case": "CASE-008",
+      "source_refs": [
+        "A5"
+      ],
+      "current_refs": [
+        "S1",
+        "A3"
+      ],
+      "historical_fact": "CASE-008 的 2012 年基础调查纸档供应商记录让 L.W.C. 与栖鸦在同一字段共现",
+      "high_value_judgment": "用第二个独立机构确认 L.W.C. 与栖鸦的稳定归属关系，降低“同缩写巧合”解释",
+      "required_for_single_case": true,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-009",
+      "source_case": "CASE-009",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S2",
+        "S3",
+        "P4",
+        "A1"
+      ],
+      "historical_fact": "CASE-009 明确给出“陆闻川（L.W.C.）”",
+      "high_value_judgment": "把本案直接作案身份 L.W.C. 解析成完整人物陆闻川，是最终 culprit 与 mastermind 命名不可缺少的一步",
+      "required_for_single_case": true,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-011",
+      "source_case": "CASE-011",
+      "source_refs": [
+        "S6",
+        "A5"
+      ],
+      "current_refs": [
+        "S1",
+        "A2"
+      ],
+      "historical_fact": "CASE-011 证明 KY-0417 仍存在于 2011 灾备恢复介质，并进入现代调查链",
+      "high_value_judgment": "历史服务编号不是只存在于纸档，而是被保留进可实际恢复的技术介质",
+      "required_for_single_case": false,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-012",
+      "source_case": "CASE-012",
+      "source_refs": [
+        "S5",
+        "A5"
+      ],
+      "current_refs": [
+        "S6",
+        "A3"
+      ],
+      "historical_fact": "CASE-012 证明灰色鸦羽/L.W.C. 早于当前伪造行为，不能把旧标识误归因给本地凶手",
+      "high_value_judgment": "保持 MASTER 归因边界，避免把所有碰到旧标识的本案凶手都错误并入栖鸦网络",
+      "required_for_single_case": false,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-013",
+      "source_case": "CASE-013",
+      "source_refs": [
+        "S6",
+        "A5"
+      ],
+      "current_refs": [
+        "S1",
+        "A3"
+      ],
+      "historical_fact": "CASE-013 再次在独立环境数据迁移中确认栖鸦 + L.W.C. + 0417 的稳定组合",
+      "high_value_judgment": "提升实体连接置信度，证明该组合跨行业复用",
+      "required_for_single_case": false,
+      "required_for_master": true
+    },
+    {
+      "id": "D15-014",
+      "source_case": "CASE-014",
+      "source_refs": [
+        "S5",
+        "A5"
+      ],
+      "current_refs": [
+        "S2",
+        "A4"
+      ],
+      "historical_fact": "CASE-014 证明 L.W.C. 在当前时间仍主动提供旧批次恢复步骤，并非只存在于历史纸档",
+      "high_value_judgment": "从“历史联系人”升级为“当前仍持续经营恢复入口的人”，构成 mastermind 的现代活动桥梁",
+      "required_for_single_case": true,
+      "required_for_master": true
+    }
+  ],
+  "cross_case_quiz": [
+    {
+      "id": "XQ15-1",
+      "q": "第三案中，0417 所在旧发票页角能看到的整理服务字样是什么？",
+      "a": "栖鸦……整理服务",
+      "aliases": [
+        "栖鸦……整理服务字样"
+      ],
+      "source_case": "CASE-003",
+      "source_refs": [
+        "S4"
+      ],
+      "current_refs": [
+        "S1",
+        "S6"
+      ],
+      "historical_only": true
+    },
+    {
+      "id": "XQ15-2",
+      "q": "第五案中，灰色鸦羽与 L.W.C. 同时出现在哪一种旧载体上？",
+      "a": "2008年目录卡",
+      "aliases": [
+        "2008 年目录卡",
+        "目录卡"
+      ],
+      "source_case": "CASE-005",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S6",
+        "A3"
+      ],
+      "historical_only": true
+    },
+    {
+      "id": "XQ15-3",
+      "q": "第八案中，哪一类历史材料再次把 L.W.C. 与栖鸦放进同一条供应商记录？",
+      "a": "基础调查纸档",
+      "aliases": [
+        "2012年基础调查纸档",
+        "生态项目基础调查纸档"
+      ],
+      "source_case": "CASE-008",
+      "source_refs": [
+        "A5"
+      ],
+      "current_refs": [
+        "S1",
+        "A3"
+      ],
+      "historical_only": true
+    },
+    {
+      "id": "XQ15-4",
+      "q": "第九案已经把 L.W.C. 解析成了哪个完整姓名？",
+      "a": "陆闻川",
+      "aliases": [
+        "陆闻川（L.W.C.）",
+        "陆闻川LWC"
+      ],
+      "source_case": "CASE-009",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S2",
+        "S3",
+        "P4"
+      ],
+      "historical_only": true
+    },
+    {
+      "id": "XQ15-5",
+      "q": "第十四案中，L.W.C. 明确要求沿用哪一套旧恢复方式，而不是走新 IAM？",
+      "a": "旧批次 0417 的本地 override",
+      "aliases": [
+        "0417 的本地 override",
+        "旧批次0417的本地override"
+      ],
+      "source_case": "CASE-014",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S2",
+        "A4"
+      ],
+      "historical_only": true
+    }
+  ],
+  "master_truth": {
+    "chapter": 1,
+    "mastermind": "陆闻川",
+    "network_name": "栖鸦恢复网络",
+    "thesis": "陆闻川以 L.W.C. 身份长期控制由旧档案数字化与系统迁移项目遗留的恢复入口，并在当前时间继续通过有偿技术支持重新启用这些入口；CASE-015 证明他亲自到场夺取 MASTER-KEY 并杀害准备公开总清单的秦术。既有 CASE-003/005/008/009 的本地凶手仍按各自 ground truth 独立成立，没有证据证明陆闻川指挥了那些凶杀",
+    "required_dependency_ids": [
+      "D15-003",
+      "D15-005",
+      "D15-008",
+      "D15-009",
+      "D15-011",
+      "D15-012",
+      "D15-013",
+      "D15-014"
+    ],
+    "required_terms": [
+      "L.W.C.",
+      "陆闻川",
+      "0417",
+      "灰色鸦羽",
+      "恢复入口",
+      "当前仍活跃",
+      "此前单案独立成立"
+    ]
+  },
+  "evaluation_targets": {
+    "memory": [
+      "multi_hop_cross_case_recall",
+      "identity_resolution",
+      "entity_linking",
+      "source_attribution",
+      "historical_to_current_bridge"
+    ],
+    "reasoning": [
+      "master_plot_synthesis",
+      "scope_control",
+      "causal_boundary",
+      "timeline_reconstruction",
+      "multi_evidence_chain"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation",
+      "cross_line_synthesis"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

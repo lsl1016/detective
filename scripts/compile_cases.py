@@ -19,7 +19,7 @@ CASEPACK = ROOT / "casepack"
 GT = ROOT / "eval" / "ground_truth"
 
 RUNTIME_KEYS = ("case_id", "title", "briefing", "scene", "npcs", "archive")
-GT_KEYS = ("case_id", "title", "truth", "meta_plot", "memory_quiz", "evaluation_targets")
+GT_KEYS = ("case_id", "title", "truth", "meta_plot", "memory_quiz", "cross_case_dependencies", "cross_case_quiz", "master_truth", "evaluation_targets")
 
 
 def require(case: dict, key: str, path: Path):
@@ -102,6 +102,88 @@ def validate(case: dict, path: Path):
         validate_string_list(values, f"evaluation_targets.{group}", path)
 
 
+def case_runtime_ids(case: dict) -> set[str]:
+    ids: set[str] = set()
+    for item in case.get("scene", []):
+        if item.get("id"):
+            ids.add(item["id"])
+    for item in case.get("npcs", []):
+        if item.get("id"):
+            ids.add(item["id"])
+    for item in case.get("archive", []):
+        if item.get("id"):
+            ids.add(item["id"])
+    return ids
+
+
+def validate_cross_case(all_cases: dict[str, dict], paths: dict[str, Path]):
+    for cid, case in all_cases.items():
+        path = paths[cid]
+        current_ids = case_runtime_ids(case)
+        dep_ids = set()
+        for dep in case.get("cross_case_dependencies", []) or []:
+            dep_id = dep.get("id")
+            if not isinstance(dep_id, str) or not dep_id or dep_id in dep_ids:
+                raise ValueError(f"{path.name}: duplicate/missing cross_case dependency id {dep_id!r}")
+            dep_ids.add(dep_id)
+            source_case = dep.get("source_case")
+            if source_case not in all_cases:
+                raise ValueError(f"{path.name}: dependency {dep_id} references unknown source_case {source_case!r}")
+            validate_string_list(dep.get("source_refs", []), f"dependency[{dep_id}].source_refs", path)
+            validate_string_list(dep.get("current_refs", []), f"dependency[{dep_id}].current_refs", path)
+            source_ids = case_runtime_ids(all_cases[source_case])
+            for ref in dep.get("source_refs", []):
+                if ref not in source_ids:
+                    raise ValueError(f"{path.name}: dependency {dep_id} source ref {source_case}:{ref} does not exist")
+            for ref in dep.get("current_refs", []):
+                if ref not in current_ids:
+                    raise ValueError(f"{path.name}: dependency {dep_id} current ref {ref} does not exist")
+            for field in ("historical_fact", "high_value_judgment"):
+                if not isinstance(dep.get(field), str) or not dep.get(field):
+                    raise ValueError(f"{path.name}: dependency {dep_id} missing string {field}")
+            for field in ("required_for_single_case", "required_for_master"):
+                if field in dep and not isinstance(dep[field], bool):
+                    raise ValueError(f"{path.name}: dependency {dep_id}.{field} must be boolean")
+
+        quiz_ids = set()
+        for q in case.get("cross_case_quiz", []) or []:
+            qid = q.get("id")
+            if not isinstance(qid, str) or not qid or qid in quiz_ids:
+                raise ValueError(f"{path.name}: duplicate/missing cross_case quiz id {qid!r}")
+            quiz_ids.add(qid)
+            for field in ("q", "a", "source_case"):
+                if not isinstance(q.get(field), str) or not q.get(field):
+                    raise ValueError(f"{path.name}: cross_case quiz {qid} missing string {field}")
+            validate_string_list(q.get("aliases", []), f"cross_case_quiz[{qid}].aliases", path)
+            validate_string_list(q.get("source_refs", []), f"cross_case_quiz[{qid}].source_refs", path)
+            validate_string_list(q.get("current_refs", []), f"cross_case_quiz[{qid}].current_refs", path)
+            source_case = q["source_case"]
+            if source_case not in all_cases:
+                raise ValueError(f"{path.name}: cross_case quiz {qid} references unknown source_case {source_case!r}")
+            source_ids = case_runtime_ids(all_cases[source_case])
+            for ref in q.get("source_refs", []):
+                if ref not in source_ids:
+                    raise ValueError(f"{path.name}: cross_case quiz {qid} source ref {source_case}:{ref} does not exist")
+            for ref in q.get("current_refs", []):
+                if ref not in current_ids:
+                    raise ValueError(f"{path.name}: cross_case quiz {qid} current ref {ref} does not exist")
+            if "historical_only" in q and not isinstance(q["historical_only"], bool):
+                raise ValueError(f"{path.name}: cross_case quiz {qid}.historical_only must be boolean")
+
+        master = case.get("master_truth")
+        if master is not None:
+            if not isinstance(master, dict):
+                raise ValueError(f"{path.name}: master_truth must be an object")
+            for field in ("mastermind", "network_name", "thesis"):
+                if not isinstance(master.get(field), str) or not master.get(field):
+                    raise ValueError(f"{path.name}: master_truth missing string {field}")
+            validate_string_list(master.get("required_dependency_ids", []), "master_truth.required_dependency_ids", path)
+            validate_string_list(master.get("required_terms", []), "master_truth.required_terms", path)
+            unknown = [x for x in master.get("required_dependency_ids", []) if x not in dep_ids]
+            if unknown:
+                raise ValueError(f"{path.name}: master_truth references unknown dependency ids {unknown}")
+
+
 def main():
     CASEPACK.mkdir(parents=True, exist_ok=True)
     GT.mkdir(parents=True, exist_ok=True)
@@ -111,13 +193,23 @@ def main():
         raise SystemExit("No cases found")
 
     compiled = []
+    all_cases: dict[str, dict] = {}
+    paths: dict[str, Path] = {}
     for path in files:
         case = yaml.safe_load(path.read_text(encoding="utf-8"))
         validate(case, path)
-
-        runtime = {k: case.get(k) for k in RUNTIME_KEYS}
-        ground_truth = {k: case.get(k) for k in GT_KEYS}
         cid = case["case_id"]
+        if cid in all_cases:
+            raise ValueError(f"duplicate case_id {cid}")
+        all_cases[cid] = case
+        paths[cid] = path
+
+    validate_cross_case(all_cases, paths)
+
+    for cid in sorted(all_cases):
+        case = all_cases[cid]
+        runtime = {k: case.get(k) for k in RUNTIME_KEYS}
+        ground_truth = {k: case.get(k) for k in GT_KEYS if case.get(k) is not None}
         (CASEPACK / f"{cid}.json").write_text(
             json.dumps(runtime, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )

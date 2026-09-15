@@ -1,0 +1,174 @@
+{
+  "case_id": "CASE-013",
+  "title": "停运仓里的第四只温度探头",
+  "truth": {
+    "culprit": "邵桓",
+    "method": "邵桓为避免 BATCH-R17 因真实温控超限被报废，在凌晨把备用探头 T-904 临时固定到更冷的回风口，并通过 4 号冷库网关维护口修改资产映射，把 T-904 的逻辑标签映射成 T-331，从而让中心系统显示一条虚假的合格曲线；温筠根据真实 T-331 缓存和独立记录器识破重映射并准备冻结批次后，邵桓在停运仓区域与其冲突并将其杀害",
+    "key_evidence": [
+      "S1",
+      "S2",
+      "S3",
+      "P3",
+      "P4",
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "method_required_terms": [
+      "T-904",
+      "T-331",
+      "回风口",
+      "资产映射",
+      "BATCH-R17",
+      "邵桓"
+    ],
+    "supporting_evidence": [
+      "S4",
+      "S5",
+      "P2",
+      "P5",
+      "A4"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M13-1",
+      "content": "本案 2012 年环境监测迁移记录把“栖鸦”与 L.W.C. 明确放在同一条供应商/联系人链上，并再次出现 0417",
+      "source_refs": [
+        "S6",
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M13-2",
+      "content": "若能召回第八案中另一家生态项目的历史供应商记录也同时出现 L.W.C. 与栖鸦，就能排除“本案只是同名缩写巧合”的弱解释",
+      "source_refs": [
+        "S6",
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q13-1",
+      "q": "第十三案被临时挪到回风口的探头编号是什么？",
+      "a": "T-904",
+      "aliases": [
+        "T904",
+        "t-904",
+        "t904"
+      ]
+    },
+    {
+      "id": "Q13-2",
+      "q": "第十三案真实发生超限的货架探头编号是什么？",
+      "a": "T-331",
+      "aliases": [
+        "T331",
+        "t-331",
+        "t331"
+      ]
+    },
+    {
+      "id": "Q13-3",
+      "q": "第十三案需要被冻结的批次编号是什么？",
+      "a": "BATCH-R17",
+      "aliases": [
+        "R17",
+        "BATCHR17",
+        "batch-r17"
+      ]
+    },
+    {
+      "id": "Q13-4",
+      "q": "第十三案是谁修改了探头资产映射？",
+      "a": "邵桓",
+      "aliases": [
+        "邵经理",
+        "运营经理邵桓"
+      ]
+    },
+    {
+      "id": "Q13-5",
+      "q": "第十三案 T-331 本地缓存最高记录到多少摄氏度？",
+      "a": "10.8摄氏度",
+      "aliases": [
+        "10.8 摄氏度",
+        "10.8度",
+        "10.8"
+      ]
+    },
+    {
+      "id": "Q13-6",
+      "q": "第十三案旧环境迁移记录中的联系人缩写是什么？",
+      "a": "L.W.C.",
+      "aliases": [
+        "LWC",
+        "L.W.C",
+        "lwc"
+      ]
+    }
+  ],
+  "cross_case_dependencies": [
+    {
+      "id": "D13-008",
+      "source_case": "CASE-008",
+      "source_refs": [
+        "A5"
+      ],
+      "current_refs": [
+        "S6",
+        "A5"
+      ],
+      "historical_fact": "CASE-008 的 2012 年基础调查纸档数字化供应商记录同时出现“栖鸦档案整理”和联系人 L.W.C.",
+      "high_value_judgment": "L.W.C. 与栖鸦在两个独立生态/环境档案体系中重复共现，说明它们属于稳定的历史服务身份组合，而不是当前案件中的偶然缩写碰撞",
+      "required_for_single_case": false,
+      "required_for_master": true
+    }
+  ],
+  "cross_case_quiz": [
+    {
+      "id": "XQ13-1",
+      "q": "第八案中，哪一类 2012 年历史材料曾把 L.W.C. 与栖鸦放在同一条供应商记录里？",
+      "a": "基础调查纸档",
+      "aliases": [
+        "2012年基础调查纸档",
+        "基础调查纸档的数字化记录",
+        "生态项目基础调查纸档"
+      ],
+      "source_case": "CASE-008",
+      "source_refs": [
+        "A5"
+      ],
+      "current_refs": [
+        "S6",
+        "A5"
+      ],
+      "historical_only": true
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "repeated_entity_pairing",
+      "source_attribution"
+    ],
+    "reasoning": [
+      "sensor_identity_resolution",
+      "physical_digital_cross_validation",
+      "independent_measurement_validation",
+      "timeline_reconstruction"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

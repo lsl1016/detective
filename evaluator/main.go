@@ -14,12 +14,15 @@ import (
 )
 
 type GroundTruth struct {
-	CaseID            string              `json:"case_id"`
-	Title             string              `json:"title"`
-	Truth             Truth               `json:"truth"`
-	MetaPlot          []MetaHint          `json:"meta_plot"`
-	MemoryQuiz        []Quiz              `json:"memory_quiz"`
-	EvaluationTargets map[string][]string `json:"evaluation_targets"`
+	CaseID                string                `json:"case_id"`
+	Title                 string                `json:"title"`
+	Truth                 Truth                 `json:"truth"`
+	MetaPlot              []MetaHint            `json:"meta_plot"`
+	MemoryQuiz            []Quiz                `json:"memory_quiz"`
+	CrossCaseDependencies []CrossCaseDependency `json:"cross_case_dependencies"`
+	CrossCaseQuiz         []CrossQuiz           `json:"cross_case_quiz"`
+	MasterTruth           *MasterTruth          `json:"master_truth,omitempty"`
+	EvaluationTargets     map[string][]string   `json:"evaluation_targets"`
 }
 
 type Truth struct {
@@ -42,6 +45,45 @@ type Quiz struct {
 	Q       string   `json:"q"`
 	A       string   `json:"a"`
 	Aliases []string `json:"aliases"`
+}
+
+type CrossCaseDependency struct {
+	ID                    string   `json:"id"`
+	SourceCase            string   `json:"source_case"`
+	SourceRefs            []string `json:"source_refs"`
+	CurrentRefs           []string `json:"current_refs"`
+	HistoricalFact        string   `json:"historical_fact"`
+	HighValueJudgment     string   `json:"high_value_judgment"`
+	RequiredForSingleCase bool     `json:"required_for_single_case"`
+	RequiredForMaster     bool     `json:"required_for_master"`
+}
+
+type CrossQuiz struct {
+	ID             string   `json:"id"`
+	Q              string   `json:"q"`
+	A              string   `json:"a"`
+	Aliases        []string `json:"aliases"`
+	SourceCase     string   `json:"source_case"`
+	SourceRefs     []string `json:"source_refs"`
+	CurrentRefs    []string `json:"current_refs"`
+	HistoricalOnly bool     `json:"historical_only"`
+}
+
+type MasterTruth struct {
+	Chapter               int      `json:"chapter"`
+	Mastermind            string   `json:"mastermind"`
+	NetworkName           string   `json:"network_name"`
+	Thesis                string   `json:"thesis"`
+	RequiredDependencyIDs []string `json:"required_dependency_ids"`
+	RequiredTerms         []string `json:"required_terms"`
+}
+
+type MasterVerdict struct {
+	CaseID        string   `json:"case_id"`
+	Mastermind    string   `json:"mastermind"`
+	NetworkName   string   `json:"network_name"`
+	Conclusion    string   `json:"conclusion"`
+	DependencyIDs []string `json:"dependency_ids"`
 }
 
 type RuntimeCase struct {
@@ -99,10 +141,11 @@ type Report struct {
 }
 
 func main() {
-	mode := flag.String("mode", "selfcheck", "selfcheck|case|quiz|access|replay|all")
+	mode := flag.String("mode", "selfcheck", "selfcheck|case|quiz|crossquiz|master|access|replay|all")
 	caseID := flag.String("case", "", "case id, e.g. CASE-001")
 	verdictPath := flag.String("verdict", "", "path to verdict JSON")
-	answersPath := flag.String("answers", "", "path to quiz answers JSON")
+	answersPath := flag.String("answers", "", "path to quiz/cross-quiz answers JSON")
+	masterVerdictPath := flag.String("master-verdict", "", "path to MASTER verdict JSON")
 	accessLog := flag.String("access-log", "./eval/runs/access.jsonl", "case server access log JSONL")
 	replayPath := flag.String("replay", "", "optional exported session events JSON")
 	gtDir := flag.String("ground-truth-dir", "./eval/ground_truth", "ground truth directory")
@@ -120,6 +163,10 @@ func main() {
 		report.Results, err = evalCase(*gtDir, *casepackDir, *caseID, *verdictPath)
 	case "quiz":
 		report.Results, err = evalQuiz(*gtDir, *caseID, *answersPath)
+	case "crossquiz":
+		report.Results, err = evalCrossQuiz(*gtDir, *caseID, *answersPath)
+	case "master":
+		report.Results, err = evalMaster(*gtDir, *caseID, *masterVerdictPath)
 	case "access":
 		report.Results, err = evalAccess(*caseID, *accessLog)
 	case "replay":
@@ -135,6 +182,14 @@ func main() {
 		}
 		if err == nil && *answersPath != "" {
 			rs, err = evalQuiz(*gtDir, *caseID, *answersPath)
+			chunks = append(chunks, rs)
+			if err == nil {
+				rs, err = evalCrossQuiz(*gtDir, *caseID, *answersPath)
+				chunks = append(chunks, rs)
+			}
+		}
+		if err == nil && *masterVerdictPath != "" {
+			rs, err = evalMaster(*gtDir, *caseID, *masterVerdictPath)
 			chunks = append(chunks, rs)
 		}
 		if err == nil && *accessLog != "" {
@@ -202,7 +257,7 @@ func selfcheck(gtDir, casepackDir string) ([]CheckResult, error) {
 			return nil, err
 		}
 		leaks := []string{}
-		for _, k := range []string{"truth", "meta_plot", "memory_quiz", "evaluation_targets"} {
+		for _, k := range []string{"truth", "meta_plot", "memory_quiz", "cross_case_dependencies", "cross_case_quiz", "master_truth", "evaluation_targets"} {
 			if _, ok := raw[k]; ok {
 				leaks = append(leaks, k)
 			}
@@ -267,6 +322,48 @@ func selfcheck(gtDir, casepackDir string) ([]CheckResult, error) {
 			Name:    "quiz_answers_exist_in_runtime:" + gt.CaseID,
 			Pass:    len(missingAnswers) == 0,
 			Summary: fmt.Sprintf("quiz answers absent from runtime material: %v", missingAnswers),
+		})
+
+		missingCrossSource := []string{}
+		currentLeaks := []string{}
+		for _, q := range gt.CrossCaseQuiz {
+			sourceData, readErr := os.ReadFile(filepath.Join(casepackDir, q.SourceCase+".json"))
+			if readErr != nil {
+				missingCrossSource = append(missingCrossSource, q.ID+":source-case-missing")
+				continue
+			}
+			candidates := append([]string{q.A}, q.Aliases...)
+			sourceText := strings.ToLower(string(sourceData))
+			sourceFound := false
+			currentFound := false
+			for _, c := range candidates {
+				if c == "" {
+					continue
+				}
+				lc := strings.ToLower(c)
+				if strings.Contains(sourceText, lc) {
+					sourceFound = true
+				}
+				if strings.Contains(runtimeText, lc) {
+					currentFound = true
+				}
+			}
+			if !sourceFound {
+				missingCrossSource = append(missingCrossSource, q.ID+":"+q.SourceCase)
+			}
+			if q.HistoricalOnly && currentFound {
+				currentLeaks = append(currentLeaks, q.ID)
+			}
+		}
+		results = append(results, CheckResult{
+			Name:    "cross_quiz_source_grounded:" + gt.CaseID,
+			Pass:    len(missingCrossSource) == 0,
+			Summary: fmt.Sprintf("cross-quiz answers absent from declared source runtime: %v", missingCrossSource),
+		})
+		results = append(results, CheckResult{
+			Name:    "cross_quiz_historical_only:" + gt.CaseID,
+			Pass:    len(currentLeaks) == 0,
+			Summary: fmt.Sprintf("historical-only accepted answers leaked into current runtime: %v", currentLeaks),
 		})
 	}
 
@@ -425,6 +522,94 @@ func evalQuiz(gtDir, caseID, answersPath string) ([]CheckResult, error) {
 		Summary: fmt.Sprintf("correct=%d/%d wrong=%v missing=%v", correct, len(gt.MemoryQuiz), wrong, missing),
 		Details: map[string]any{"correct": correct, "total": len(gt.MemoryQuiz), "wrong": wrong, "missing": missing},
 	}}, nil
+}
+
+func evalCrossQuiz(gtDir, caseID, answersPath string) ([]CheckResult, error) {
+	if caseID == "" || answersPath == "" {
+		return nil, errors.New("-case and -answers are required")
+	}
+	var gt GroundTruth
+	if err := readJSON(filepath.Join(gtDir, caseID+".json"), &gt); err != nil {
+		return nil, err
+	}
+	if len(gt.CrossCaseQuiz) == 0 {
+		return []CheckResult{{Name: "cross_case_quiz", Pass: true, Summary: "no cross-case quiz configured"}}, nil
+	}
+	answers := map[string]string{}
+	if err := readJSON(answersPath, &answers); err != nil {
+		return nil, err
+	}
+	correct := 0
+	wrong := []string{}
+	missing := []string{}
+	for _, q := range gt.CrossCaseQuiz {
+		got, ok := answers[q.ID]
+		if !ok {
+			missing = append(missing, q.ID)
+			continue
+		}
+		accepted := append([]string{q.A}, q.Aliases...)
+		matched := false
+		for _, a := range accepted {
+			if normalize(got) == normalize(a) {
+				matched = true
+				break
+			}
+		}
+		if matched {
+			correct++
+		} else {
+			wrong = append(wrong, fmt.Sprintf("%s got=%q", q.ID, got))
+		}
+	}
+	pass := correct == len(gt.CrossCaseQuiz)
+	return []CheckResult{{
+		Name:    "cross_case_quiz",
+		Pass:    pass,
+		Summary: fmt.Sprintf("correct=%d/%d wrong=%v missing=%v", correct, len(gt.CrossCaseQuiz), wrong, missing),
+		Details: map[string]any{"correct": correct, "total": len(gt.CrossCaseQuiz), "wrong": wrong, "missing": missing},
+	}}, nil
+}
+
+func evalMaster(gtDir, caseID, verdictPath string) ([]CheckResult, error) {
+	if caseID == "" || verdictPath == "" {
+		return nil, errors.New("-case and -master-verdict are required")
+	}
+	var gt GroundTruth
+	if err := readJSON(filepath.Join(gtDir, caseID+".json"), &gt); err != nil {
+		return nil, err
+	}
+	if gt.MasterTruth == nil {
+		return nil, fmt.Errorf("case %s has no master_truth", caseID)
+	}
+	var v MasterVerdict
+	if err := readJSON(verdictPath, &v); err != nil {
+		return nil, err
+	}
+	results := []CheckResult{
+		{Name: "master_case_id", Pass: v.CaseID == caseID, Summary: fmt.Sprintf("got=%s want=%s", v.CaseID, caseID)},
+		{Name: "mastermind", Pass: normalize(v.Mastermind) == normalize(gt.MasterTruth.Mastermind), Summary: fmt.Sprintf("got=%s want=%s", v.Mastermind, gt.MasterTruth.Mastermind)},
+		{Name: "network_name", Pass: normalize(v.NetworkName) == normalize(gt.MasterTruth.NetworkName), Summary: fmt.Sprintf("got=%s want=%s", v.NetworkName, gt.MasterTruth.NetworkName)},
+	}
+	missingTerms := []string{}
+	for _, term := range gt.MasterTruth.RequiredTerms {
+		if !strings.Contains(normalize(v.Conclusion), normalize(term)) {
+			missingTerms = append(missingTerms, term)
+		}
+	}
+	results = append(results, CheckResult{Name: "master_required_terms", Pass: len(missingTerms) == 0, Summary: fmt.Sprintf("missing required terms: %v", missingTerms)})
+	provided := map[string]bool{}
+	for _, id := range v.DependencyIDs {
+		provided[id] = true
+	}
+	missingDeps := []string{}
+	for _, id := range gt.MasterTruth.RequiredDependencyIDs {
+		if !provided[id] {
+			missingDeps = append(missingDeps, id)
+		}
+	}
+	results = append(results, CheckResult{Name: "master_dependency_coverage", Pass: len(missingDeps) == 0, Summary: fmt.Sprintf("missing dependency ids: %v", missingDeps)})
+	return results, nil
 }
 
 func evalAccess(caseID, path string) ([]CheckResult, error) {

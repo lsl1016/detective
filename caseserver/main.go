@@ -389,7 +389,7 @@ func (s *Server) loadRuntimeCase(caseID string) (RuntimeCase, error) {
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return RuntimeCase{}, err
 	}
-	for _, forbidden := range []string{"truth", "meta_plot", "memory_quiz", "evaluation_targets"} {
+	for _, forbidden := range []string{"truth", "meta_plot", "memory_quiz", "cross_case_dependencies", "cross_case_quiz", "master_truth", "evaluation_targets"} {
 		if _, ok := raw[forbidden]; ok {
 			return RuntimeCase{}, fmt.Errorf("runtime casepack leaks forbidden field %q", forbidden)
 		}

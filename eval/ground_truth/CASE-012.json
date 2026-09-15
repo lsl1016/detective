@@ -1,0 +1,174 @@
+{
+  "case_id": "CASE-012",
+  "title": "没有原稿的第五幅画",
+  "truth": {
+    "culprit": "许端",
+    "method": "许端为推动来源不完整的 P-05 上拍并获取额外佣金，利用本人笔记本在资料室打印 provenance_fix_v3.pdf 生成伪造的“2006 私人收藏入库”页面并尝试把它混入旧登记链；苏芮通过 2018 年仍为“来源待核”的历史记录、纸张与打印日志识破伪造并准备冻结拍卖后，许端在资料室与其冲突并将其杀害",
+    "key_evidence": [
+      "S3",
+      "S4",
+      "P3",
+      "P4",
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "method_required_terms": [
+      "P-05",
+      "2006",
+      "provenance_fix_v3",
+      "资料室",
+      "来源待核",
+      "许端"
+    ],
+    "supporting_evidence": [
+      "S1",
+      "S2",
+      "S6",
+      "P2",
+      "P5",
+      "A4",
+      "A5"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M12-1",
+      "content": "灰色鸦羽与 L.W.C. 的历史扫描层明显早于许端当前的伪造行为，因此不能把这一旧标记错误归因给本案凶手",
+      "source_refs": [
+        "S5",
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M12-2",
+      "content": "如果召回此前某案中“旧目录卡 + 灰色鸦羽水印 + L.W.C.”的组合，可以证明这套标记至少在多个独立旧档案环境中长期存在",
+      "source_refs": [
+        "S5",
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q12-1",
+      "q": "第十二案争议画作的编号是什么？",
+      "a": "P-05",
+      "aliases": [
+        "P05",
+        "p-05",
+        "p05"
+      ]
+    },
+    {
+      "id": "Q12-2",
+      "q": "第十二案 2018 年修复编号是什么？",
+      "a": "REST-18-224",
+      "aliases": [
+        "REST18224",
+        "rest-18-224"
+      ]
+    },
+    {
+      "id": "Q12-3",
+      "q": "第十二案许端打印伪造材料的文件名是什么？",
+      "a": "provenance_fix_v3.pdf",
+      "aliases": [
+        "provenance_fix_v3",
+        "provenance fix v3"
+      ]
+    },
+    {
+      "id": "Q12-4",
+      "q": "第十二案许端的打印任务在几点提交？",
+      "a": "20:31",
+      "aliases": [
+        "20点31分",
+        "20时31分",
+        "20:31:42"
+      ]
+    },
+    {
+      "id": "Q12-5",
+      "q": "第十二案 P-05 在 2018 至 2025 的历史状态是什么？",
+      "a": "来源待核",
+      "aliases": [
+        "来源待核状态",
+        "来源未核清"
+      ]
+    },
+    {
+      "id": "Q12-6",
+      "q": "第十二案历史扫描页角保留了哪两个标记？",
+      "a": "灰色鸦羽和L.W.C.",
+      "aliases": [
+        "灰色鸦羽与 L.W.C.",
+        "灰色鸦羽与 L.W.C",
+        "鸦羽和LWC",
+        "灰色鸦羽和LWC"
+      ]
+    }
+  ],
+  "cross_case_dependencies": [
+    {
+      "id": "D12-005",
+      "source_case": "CASE-005",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S5",
+        "A5"
+      ],
+      "historical_fact": "CASE-005 的 2008 年目录卡背面同时出现灰色鸦羽水印与“整理人 L.W.C.”",
+      "high_value_judgment": "当前案灰色鸦羽与 L.W.C. 属于旧档案服务层，不应被错误当作许端近期伪造页面的个人暗号",
+      "required_for_single_case": false,
+      "required_for_master": true
+    }
+  ],
+  "cross_case_quiz": [
+    {
+      "id": "XQ12-1",
+      "q": "哪一种第五案历史载体曾同时出现灰色鸦羽水印和“整理人 L.W.C.”，从而证明本案同类标记早于当前伪造？",
+      "a": "2008年目录卡",
+      "aliases": [
+        "2008 年目录卡",
+        "旧片盒中的2008年目录卡",
+        "目录卡"
+      ],
+      "source_case": "CASE-005",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S5",
+        "A5"
+      ],
+      "historical_only": true
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "negative_transfer_control",
+      "source_attribution"
+    ],
+    "reasoning": [
+      "provenance_layer_separation",
+      "document_forensics",
+      "timeline_reconstruction",
+      "false_causal_link_rejection"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "case_id": "CASE-014",
+  "title": "关机后的第九次登录",
+  "truth": {
+    "culprit": "高叙",
+    "method": "高叙为了利用 recovery-admin 导出封存样本索引牟利，按照外部 L.W.C. 提供的旧批次 0417 本地 override 步骤，在 00:07 使用 LEGACY-JUMP-02 将账号临时提升为 export-index 并导出 IDX-R9；沈岚发现第九次登录并准备冻结旧账号后，高叙持维护钥匙前往旧机房，在介质交接室与其冲突并将其杀害，随后回到新机房继续伪装关机演练",
+    "key_evidence": [
+      "S1",
+      "S4",
+      "P2",
+      "P4",
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "method_required_terms": [
+      "recovery-admin",
+      "第九次",
+      "LEGACY-JUMP-02",
+      "override",
+      "IDX-R9",
+      "高叙"
+    ],
+    "supporting_evidence": [
+      "S2",
+      "S3",
+      "S6",
+      "P3",
+      "P5",
+      "A4",
+      "A5"
+    ]
+  },
+  "meta_plot": [
+    {
+      "hint_id": "M14-1",
+      "content": "L.W.C. 不再只是十多年前的历史联系人缩写，而是在本案发生前三天仍主动提供旧迁移账号的恢复步骤，证明该身份链至少持续活动到当前时间",
+      "source_refs": [
+        "S5",
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    },
+    {
+      "hint_id": "M14-2",
+      "content": "当前案卷故意不提供 L.W.C. 的完整姓名；只有准确召回此前已经完成的身份解析，才能把“活跃的 L.W.C.”落到具体人物",
+      "source_refs": [
+        "S5",
+        "A5"
+      ],
+      "truth_link": "MASTER"
+    }
+  ],
+  "memory_quiz": [
+    {
+      "id": "Q14-1",
+      "q": "第十四案旧系统历史账号的名称是什么？",
+      "a": "recovery-admin",
+      "aliases": [
+        "recovery admin",
+        "recoveryadmin"
+      ]
+    },
+    {
+      "id": "Q14-2",
+      "q": "第十四案第九次登录发生在几点？",
+      "a": "00:07",
+      "aliases": [
+        "00点07分",
+        "0点07分",
+        "00:07:16"
+      ]
+    },
+    {
+      "id": "Q14-3",
+      "q": "第十四案第九次登录使用的跳板机编号是什么？",
+      "a": "LEGACY-JUMP-02",
+      "aliases": [
+        "LEGACYJUMP02",
+        "legacy-jump-02"
+      ]
+    },
+    {
+      "id": "Q14-4",
+      "q": "第十四案导出的索引批次叫什么？",
+      "a": "IDX-R9",
+      "aliases": [
+        "IDXR9",
+        "idx-r9",
+        "idxr9"
+      ]
+    },
+    {
+      "id": "Q14-5",
+      "q": "第十四案是谁使用个人管理员账号打开 legacy_override 工具？",
+      "a": "高叙",
+      "aliases": [
+        "IT主管高叙",
+        "高主管"
+      ]
+    },
+    {
+      "id": "Q14-6",
+      "q": "第十四案近期外部支持消息的署名缩写是什么？",
+      "a": "L.W.C.",
+      "aliases": [
+        "LWC",
+        "L.W.C",
+        "lwc"
+      ]
+    }
+  ],
+  "cross_case_dependencies": [
+    {
+      "id": "D14-009",
+      "source_case": "CASE-009",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S5",
+        "A5"
+      ],
+      "historical_fact": "CASE-009 的 2008 年藏品整理目录明确给出“陆闻川（L.W.C.）”",
+      "high_value_judgment": "本案仍在提供 recovery-admin 支持的 L.W.C. 可以被解析为陆闻川，使“历史联系人”第一次升级为“当前仍活跃的具体人物”",
+      "required_for_single_case": false,
+      "required_for_master": true
+    }
+  ],
+  "cross_case_quiz": [
+    {
+      "id": "XQ14-1",
+      "q": "本案近期支持消息只署名 L.W.C.。根据第九案已经完成的身份解析，这个缩写对应的完整姓名是什么？",
+      "a": "陆闻川",
+      "aliases": [
+        "陆闻川（L.W.C.）",
+        "陆闻川LWC"
+      ],
+      "source_case": "CASE-009",
+      "source_refs": [
+        "S5"
+      ],
+      "current_refs": [
+        "S5",
+        "A5"
+      ],
+      "historical_only": true
+    }
+  ],
+  "evaluation_targets": {
+    "memory": [
+      "exact_fact",
+      "cross_case_recall",
+      "identity_resolution",
+      "historical_to_current_bridge"
+    ],
+    "reasoning": [
+      "legacy_account_abuse",
+      "local_override_attribution",
+      "timeline_reconstruction",
+      "identity_scope_separation"
+    ],
+    "multi_agent": [
+      "parallel_delegate",
+      "information_isolation"
+    ],
+    "skills": [
+      "timeline_reconstruction",
+      "cross_validation"
+    ]
+  }
+}
